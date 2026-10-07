@@ -30,6 +30,14 @@
 | Meaning: at least three of us care |3|If everyone cares, effort and dedication will flourish. Weighted below the feasibility criteria because interest is the thing most likely to grow once we talk to real users, and least likely to predict accurately today.|
 
 ## Scores (1 to 5, median of private scores)
+| Criterion | Weight | Music App | Travel App | Opt-in Directory | 
+|---|---|---|---|---|
+| Wicked at team scale | 5 | 5 | 5 | 5 |
+| Users reachable | 4 | 4 | 4 | 3 |
+| Buildable | 4 | 3 | 4 | 4 |
+| Data | 3 | 3 | 3 | 2 |
+| Meaning | 4 | 4 | 4 | 5 |
+| **Weighted total (max 100)** | | **78** | **82** | **79** |
 
 ## Decision
 
