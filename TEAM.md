@@ -16,6 +16,7 @@
 | Name | Role | GitHub | Contact hours (ET) |
 |---|---|---|---|
 | Semaj Johnson II | Reviewer | @semajjohnson | 9am–7pm|
+| Aashi Mehta | Architect and Implementer | @mehtaashi05 | 9am–7pm|
 
 ## RACI Matrix (Phase 1)
 
