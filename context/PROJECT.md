@@ -1,15 +1,11 @@
-# PROJECT.md
+## What changed
+Adds three EARS rows for the export feature.
 
-Stub from mgt3745-group-template. Accountable: the Specifier.
+## RACI row
+FEATURES.md (Specifier, A)
 
-## Original Problem Statement (<owner>, HW1)
+## How to check it
+Each row traces to the Finance Manager job statement in USERS.md.
 
-## Reframed for the Team
-
-## Outcome
-
-## Scope
-
-## Constraints
-
-## Stakeholders
+## AI use
+None
