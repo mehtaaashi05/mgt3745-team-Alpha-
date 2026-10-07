@@ -6,7 +6,7 @@
 # (for example @jdoe) and removes the leading "# " from each rule line,
 # on a branch, through a pull request, AFTER every roster PR has merged.
 #
-# *                        @semajjohnson @rishikasikhakolli
+  *                        @semajjohnson @rishikasikhakolli
  /context/PROJECT.md       @rishikasikhakolli @semajjohnson
  /context/USERS.md         @rishikasikhakolli @semajjohnson
  /context/FEATURES.md      @rishikasikhakolli @semajjohnson
