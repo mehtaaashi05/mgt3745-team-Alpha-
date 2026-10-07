@@ -34,16 +34,7 @@ Merged from three members' HW5 versions by Aashi Mehta, Implementer. Where two r
 - Commit messages: `FILE: what changed`. Example: `USERS.md: merge four profiles into three`. Begin each message with an action verb and name the user-visible result.
 - Pull request description has four parts: What changed, RACI row, How to check it, AI use.
 - Work on a branch and merge into `main` only through a pull request reviewed by someone other than the author.
-- After branch protection is enabled, do not commit directly to `main`.
 - Never put credentials in a commit, pull request, or repository document.
-
-## Merge Record
-
-- **Merged:** Aashi's HW5 rule on role-distinguishing names (`notes`, `candidate`, `nextNotes`) in `app.js` is retained over generic names because it prevents ambiguity and is stricter.
-- **Merged:** Aashi's HW5 rule to avoid `innerHTML`, `outerHTML`, and `insertAdjacentHTML` for user-entered text is retained because it is stricter than a generic HTML-handling rule.
-- **Merged:** Aashi's HW5 rule on failed requests shown to the user on the page, not only in the console, is retained because it is stricter.
-- **Merged:** Rishika's and Semaj's standards on document formatting (no em dashes, tables for comparisons, ID traces) are retained because they are consistent and clear across the team.
-- **Merged:** Semaj's naming convention for camelCase variables, kebab-case files, and UPPER_SNAKE_CASE constants is adopted by the team.
 
 ## If STANDARDS.md and CLAUDE.md disagree
 
