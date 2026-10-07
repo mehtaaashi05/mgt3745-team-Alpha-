@@ -1,77 +1,50 @@
-# ARCHITECTURE.md
+# STANDARDS.md
 
-Status: ACTIVE. Accountable: Giancarlo (Architect). This file records the architecture decision for the team's selected problem: a casual, photo-first travel diary for recording and rating places visited, browsing reviews by category, and eventually ranking places by city and category.
+Merged from three members' HW5 versions by Aashi Mehta, Implementer. Where two rules conflicted, the stricter one was kept; each such choice is marked **Merged:**. Giancarlo did not provide HW5 standards, so the team proceeded with the standards from the three available members.
 
-## The Gate: Build, Buy, or Delegate
+## Documents
 
-### Weights (committed before scores)
+- Markdown, one H1 per file, headings in title case.
+- No em dashes. Use a colon, a comma, parentheses, or two sentences. **Merged:** Rishika and Semaj already required this; Aashi did not specify.
+- Tables for anything compared across more than two items.
+- Every EARS row has an ID (F1-1) and traces to a job statement in USERS.md.
+- Dates as YYYY-MM-DD in records; plain dates in prose.
+- Inline comments explain why, not what. Keep them minimal.
+- Keep the README current with each deployed change.
 
-| Criterion | Weight (1 to 5) | Why this weight |
-|---|---:|---|
-| Still wicked at team scale | 5 | The product must remain meaningfully complex when work is split across four contributors. |
-| Users the team can reach by Oct 22 | 4 | A solution with accessible users is more likely to be validated in time. |
-| Buildable on our stack in three weeks | 5 | The project is time-boxed and must be achievable within the course schedule. |
-| Data we can get legally and soon | 4 | The architecture should rely on data we can obtain without legal or operational risk. |
-| Meaning: at least three of us care | 4 | The solution needs enough team buy-in to stay realistic and motivating. |
-| Switching cost from prior course work | 3 | The design should use known patterns and limit retooling burden. |
+## Code (Phase 2)
 
-### Scores
+- JavaScript modules, `const` by default, no `var`.
+- Use descriptive camelCase for identifiers and kebab-case for new filenames. Short conventional names like `event`, `index`, and `item` are fine when their role is obvious.
+- Use descriptive names for values that cross a browser/server boundary.
+- `textContent` for any user-supplied text. Never `innerHTML` with user data. **Merged:** Aashi's HW5 explicitly forbade `innerHTML`, `outerHTML`, and `insertAdjacentHTML` for note content; this is the stricter rule.
+- SQL through `prepare().bind()` only. **Merged:** Never concatenate user input into a query; Aashi's rule applies.
+- Every `fetch` checks `res.ok` and shows the user a message on failure.
+- No `console.log` in committed code.
+- No secrets, tokens, or location links in the repository, ever. Database identifiers may appear only when they are not credentials.
+- Keep structure in `index.html`, presentation in `styles.css`, and behavior in `app.js`.
+- Keep application code inside the IIFE in `app.js` so nothing becomes an accidental global.
+- Preserve the invariant that storage succeeds before the interface changes; do not change the visible state before the write has succeeded.
+- Every form control has a label, and success and error messages appear in announced elements. When a save fails, the user's typed input stays in the fields.
 
-| Option | Build in-house | Buy managed service | Delegate to external service |
-|---|---:|---:|---:|
-| Still wicked at team scale | 4 | 3 | 2 |
-| Reach by Oct 22 | 4 | 4 | 3 |
-| Buildable in three weeks | 5 | 4 | 2 |
-| Data risk | 4 | 4 | 3 |
-| Meaning to team | 4 | 3 | 2 |
-| Switching cost | 4 | 3 | 2 |
-| Weighted total | 87 | 70 | 48 |
+## Git
 
-### Decision
+- Branch names: `role/short-description`, lowercase, hyphens. Example: `spec/features-kano`.
+- One artifact per pull request where possible.
+- Commit messages: `FILE: what changed`. Example: `USERS.md: merge four profiles into three`. Begin each message with an action verb and name the user-visible result.
+- Pull request description has four parts: What changed, RACI row, How to check it, AI use.
+- Work on a branch and merge into `main` only through a pull request reviewed by someone other than the author.
+- After branch protection is enabled, do not commit directly to `main`.
+- Never put credentials in a commit, pull request, or repository document.
 
-The team should build the core product in a browser-first application and buy only the minimal managed backend services required for persistence and data crossing. This keeps the product infrastructure small, easy to review, and consistent with the limited timeline.
+## Merge Record
 
-## ADR-001: Browser-first app with a minimal managed backend
+- **Merged:** Aashi's HW5 rule on role-distinguishing names (`notes`, `candidate`, `nextNotes`) in `app.js` is retained over generic names because it prevents ambiguity and is stricter.
+- **Merged:** Aashi's HW5 rule to avoid `innerHTML`, `outerHTML`, and `insertAdjacentHTML` for user-entered text is retained because it is stricter than a generic HTML-handling rule.
+- **Merged:** Aashi's HW5 rule on failed requests shown to the user on the page, not only in the console, is retained because it is stricter.
+- **Merged:** Rishika's and Semaj's standards on document formatting (no em dashes, tables for comparisons, ID traces) are retained because they are consistent and clear across the team.
+- **Merged:** Semaj's naming convention for camelCase variables, kebab-case files, and UPPER_SNAKE_CASE constants is adopted by the team.
 
-- **Status:** Accepted. Approver: Aashi Mehta.
+## If STANDARDS.md and CLAUDE.md disagree
 
-### Context
-
-The project is a course-based team build that must remain understandable, reviewable, and secure. The critical architecture decision is where data crosses the browser trust boundary: what leaves the browser, to which vendor-managed service, under which terms, and who is accountable for the boundary. The service boundary must be explicit and the repository must remain credential-free. The accountable owner for the service boundary is Aashi Mehta, Implementer; the product intent stays with the Specifier and the architectural decision stays with the Architect.
-
-### Options
-
-1. Build the entire experience in the browser with no server-side persistence beyond local storage or a mock store.
-2. Build a browser-first experience and add a minimal managed backend for storage and API calls.
-3. Delegate the core product logic to a vendor-managed service and build only a thin client.
-
-### Decision
-
-Use a browser-first application with a small managed server boundary for persistence and vendor-managed processing. The browser remains the primary product experience, while a minimal API layer handles the necessary data crossing and persistence. The likely trust boundary is browser-to-Cloudflare Worker or a similar managed runtime, followed by a managed database for storage, with all credentials kept out of the repository.
-
-### Consequences
-
-- The team can iterate quickly on the core user experience while keeping the backend small and reviewable.
-- The architecture remains familiar to a small student team and fits the course time box.
-- Data handling becomes explicit, which improves reviewability and reduces accidental secret exposure.
-- A managed vendor introduces operational constraints, vendor terms, and a dependency that gets harder to avoid once the boundary is used.
-- Some product changes become more complex because browser state and backend persistence must remain in sync.
-
-### Revisit Trigger
-
-Revisit this ADR if the team adds a data-retention requirement, user accounts, a richer backend contract, or a vendor dependency that materially changes the browser-to-server crossing.
-
-## Architecture Diagram
-
-```mermaid
-flowchart LR
-    U[User Browser] --> UI[Web UI / DOM]
-    UI --> V[Client-side validation and state]
-    V --> P[Managed API boundary / Cloudflare Worker]
-    P --> D[(Managed database or persistence)]
-    P --> E[External service call if required]
-    D --> P
-    P --> UI
-```
-
-This diagram matches ADR-001: the browser remains the main experience, and the only intentional trust boundary is the managed API layer where non-public data leaves the browser and enters vendor-controlled infrastructure.
+STANDARDS.md is normative. Repair CLAUDE.md to match rather than following them separately.
