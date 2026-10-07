@@ -1,12 +1,8 @@
 # CODEOWNERS: the Accountable column of TEAM.md, enforced by GitHub.
 # Every path needs two owners so that nobody approves their own work.
-# Last matching pattern wins. Owners must have write access to this repository.
+# Owners must have write access to this repository.
 #
-# The Implementer replaces the placeholders with real GitHub usernames
-# (for example @jdoe) and removes the leading "# " from each rule line,
-# on a branch, through a pull request, AFTER every roster PR has merged.
-#
-# *                         @reviewer @implementer
+# *                         @implementer @reviewer
 # /context/PROJECT.md       @specifier @reviewer
 # /context/USERS.md         @specifier @reviewer
 # /context/FEATURES.md      @specifier @reviewer
@@ -16,3 +12,17 @@
 # /context/STANDARDS.md     @implementer @architect
 # /context/TOOLS.md         @implementer @architect
 # /docs/                    @reviewer @implementer
+#
+# Phase 1 role mapping: Aashi is Implementer, Giancarlo is Architect, Rishika
+# is Specifier, and Semaj is Reviewer. The Phase 2 and Final rotations are
+# proposed in TEAM.md and await confirmation.
+*                         @mehtaaashi05 @semajjohnson
+/context/PROJECT.md       @rishikasikhakolli @semajjohnson
+/context/USERS.md         @rishikasikhakolli @semajjohnson
+/context/FEATURES.md      @rishikasikhakolli @semajjohnson
+/context/ARCHITECTURE.md  @GiancarloMartinez-Saldana @semajjohnson
+/context/EVALS.md         @semajjohnson @rishikasikhakolli
+/context/CLAUDE.md        @mehtaaashi05 @GiancarloMartinez-Saldana
+/context/STANDARDS.md     @mehtaaashi05 @GiancarloMartinez-Saldana
+/context/TOOLS.md         @mehtaaashi05 @GiancarloMartinez-Saldana
+/docs/                    @semajjohnson @mehtaaashi05

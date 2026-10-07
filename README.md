@@ -1,29 +1,43 @@
-# <Team Name>: <Product or Problem in a Few Words>
-
-> Replace every line in angle brackets. A README that still carries template placeholders loses points. The demo repository at https://github.com/johnmcswain/mgt3745-team-demo shows a finished Phase 1 version of every file here.
+# Team Alpha: Casual Travel Reviews
 
 ## What
 
-<The team problem in one sentence.>
+A casual, photo-first travel diary for recording and rating places visited,
+browsing reviews by category, and eventually ranking places by city and
+category.
 
 ## Team
 
-| Member | Phase 1 role | Phase 2 role | Final role |
-|---|---|---|---|
-|Aashi Mehta| Implementer | Architect | Specifier |
-| Rishika Sikhakoli | <role> | <role> | <role> |
-| Semaj Johnson II | <role> | <role> | <role> |
-| Giancarlo Martinez-Saldana | <role> | <role> | <role> |
+| Member | GitHub | Phase 1 role | Phase 2 role (proposed) | Final role (proposed) |
+|---|---|---|---|---|
+| Aashi Mehta | [@mehtaaashi05](https://github.com/mehtaaashi05) | Implementer | Reviewer | Specifier |
+| Giancarlo Martinez-Saldana | [@GiancarloMartinez-Saldana](https://github.com/GiancarloMartinez-Saldana) | Architect | Implementer | Reviewer |
+| Rishika Sikhakoli | [@rishikasikhakolli](https://github.com/rishikasikhakolli) | Specifier | Architect | Implementer |
+| Semaj Johnson II | [@semajjohnson](https://github.com/semajjohnson) | Reviewer | Specifier | Architect |
 
 Working agreement, RACI matrix, and rotation plan: [TEAM.md](TEAM.md).
 
 ## Status
 
-<What Phase 1 decided, and what Phase 2 builds first.>
+The Implementer's draft Build/Buy/Delegate assessment recommends an in-house,
+browser-only review-and-category-filter prototype and awaits the Architect's
+review. The team reports agreement on the gate weights. The weighted option
+scores are draft judgments for Architect review, not measured research
+results. Phase 1 roles are Aashi
+(Implementer), Giancarlo (Architect), Rishika (Specifier), and Semaj
+(Reviewer). Phase 2 and Final role rotations are proposed in `TEAM.md` and
+await confirmation. Giancarlo is reported as a quiet member after multiple
+unanswered emails; the team agreement calls for contacting the instructor.
+The future city/category ranking idea is not yet specified as an acceptance
+criterion. Detailed implementation requirements remain pending the
+Specifier's project, user, and feature documents. The Implementer reconciled
+the supplied standards; team confirmation remains pending. App implementation
+and deployment remain pending.
 
 ## See It Work
 
-<Phase 2: the deployed URL and a GIF or screenshots of the build.>
+There is no application source or deployed demo in this repository yet. Add
+the deployed URL and a GIF or screenshots after implementation.
 
 ## Links, in Reading Order
 
@@ -37,8 +51,11 @@ Working agreement, RACI matrix, and rotation plan: [TEAM.md](TEAM.md).
 8. [context/EVALS.md](context/EVALS.md): the tree, the RAT, every member's stake
 9. [context/CLAUDE.md](context/CLAUDE.md), [context/STANDARDS.md](context/STANDARDS.md), [context/TOOLS.md](context/TOOLS.md): how we work
 10. [docs/DDR-001.md](docs/DDR-001.md): the probe delegation
-11. Previews: [STYLE.md](context/STYLE.md), [SKILLS.md](context/SKILLS.md), [AGENTS.md](context/AGENTS.md)
+11. [docs/DDR-002.md](docs/DDR-002.md): Copilot-assisted Architect/Implementer draft
+12. Previews: [STYLE.md](context/STYLE.md), [SKILLS.md](context/SKILLS.md), [AGENTS.md](context/AGENTS.md)
 
 ## AI Use
 
-<Where AI tools were Responsible or Consulted, each with a link to its DDR or pull request.>
+Copilot SDK in VS Code assisted with drafts of the Architect and Implementer
+artifacts; see [docs/DDR-002.md](docs/DDR-002.md). The required bolt.new probe
+has not been run; see [docs/DDR-001.md](docs/DDR-001.md).

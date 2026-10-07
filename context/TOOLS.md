@@ -1,16 +1,17 @@
 # TOOLS.md
 
-Draft by Aashi Mehta, Implementer. The team has not yet confirmed its Phase 2
-services or named the Specifier. The bolt.new probe is required but has not
-been run. Never put credentials in this file or elsewhere in the repository.
+Accountable: Aashi Mehta, Implementer. Status: proposed tool register; team
+approval and the Phase 2 hosting/data choices are pending. Do not put
+credentials in this file or elsewhere in the repository.
 
-| Service | Trusted with | Credentials live | Crossing statement | Switching cost |
+| Service | Trusted with | Credentials live | Data crossing the boundary | Switching cost |
 |---|---|---|---|---|
-| GitHub | This public repository, its source files, pull requests, reviews, and commit history | Each member's GitHub account; no credentials in the repository | Everything committed to this repository, including drafts and review comments, is stored by GitHub in a public repository. The team is accountable for its contents, and Aashi Mehta is accountable for repository settings as Implementer. | Low: clone the repository and move collaboration to another Git host |
-| GitHub Copilot in VS Code | Project-document context and prompts supplied for drafting this Implementer documentation | Individual GitHub accounts; no credentials in the repository | Repository-document context and prompts supplied for this drafting assistance are sent to GitHub Copilot. Aashi Mehta is accountable for what is supplied and for reviewing all suggestions before use. | Low: turn it off and edit the documents directly |
-| bolt.new and StackBlitz | The team's `context/FEATURES.md` and the single specification-probe prompt; actual input is pending | The Specifier's StackBlitz account; no credentials in the repository | The Specifier will send the agreed `FEATURES.md` and one prompt to bolt.new, operated by StackBlitz, for the required probe. The team's Specifier is accountable for the submitted material and review of the result; the Specifier has not yet been identified, and the probe has not been run. | Low: document assumptions and exclusions manually without using generated code |
+| GitHub | The project repository, source files, issues, pull requests, reviews, and commit history | Each member's own GitHub account; no credentials in the repository | The configured origin is `mehtaaashi05/mgt3745-team-Alpha-`. Committed material and collaboration activity are stored by GitHub. Aashi Mehta is the Implementer's contact for repository settings; team ownership and branch-protection status still need confirmation. | Low to moderate: clone the Git repository and move collaboration to another Git host. |
+| GitHub Copilot in VS Code | Project files and prompts explicitly supplied for drafting or review | Each user's own GitHub account; no credentials in the repository | This drafting task supplied project documentation and the travel-review concept/standards to Copilot. Do not provide secrets or real-user private data. A human artifact owner must verify suggestions. Team approval and a RACI assignment for each use are pending. | Low: turn it off and continue editing directly. |
+| bolt.new / StackBlitz | Only the approved `context/FEATURES.md` and one specification-probe prompt | The Specifier's own StackBlitz account; no credentials in the repository | The required probe has not been run. Before submission, the Specifier must check the service's terms, approve the exact input, and record the actual model/version, date, prompt, and any additional submitted data in `docs/DDR-001.md` and `docs/PROBE-001.md`. Do not keep generated code. | Low: document assumptions and exclusions manually without generated output. |
 
-Add a row before the team uses another external service. Update the bolt.new
-row and `docs/DDR-001.md` after the probe with the actual input, date, and
-accountable Specifier. Add Cloudflare, D1, Wrangler, or other product services
-only if the team selects them for Phase 2.
+No hosting, database, analytics, image-hosting, or other product service has
+been selected. The proposed first architecture is browser-only; it must not
+send user reviews or photos to an unapproved service. Add a row and obtain the
+team's approval before using another external service. Update this register
+and the applicable DDR when a service is actually selected or used.
