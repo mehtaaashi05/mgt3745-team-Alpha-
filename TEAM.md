@@ -14,7 +14,8 @@
 ## Roster
 
 | Name | Role | GitHub | Contact hours (ET) |
-| Semaj Johnson II | Reviewer | @semajjohnson |9am-7pm ET|
+|---|---|---|---|
+| Semaj Johnson II | Reviewer | @semajjohnson | 9am–7pm|
 
 ## RACI Matrix (Phase 1)
 
