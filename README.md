@@ -11,9 +11,9 @@
 | Member | Phase 1 role | Phase 2 role | Final role |
 |---|---|---|---|
 |Aashi Mehta| Implementer | Architect | Specifier |
-| Rishika Sikhakoli | <role> | <role> | <role> |
-| Semaj Johnson II | <role> | <role> | <role> |
-| Giancarlo Martinez-Saldana | <role> | <role> | <role> |
+| Rishika Sikhakoli | <Specifier> | <Reviewer> | <Implementer> |
+| Semaj Johnson II | <Reviewer> | <Specifier> | <Architect> |
+| Giancarlo Martinez-Saldana | <Architect> | <Implementer> | <Reviewer> |
 
 Working agreement, RACI matrix, and rotation plan: [TEAM.md](TEAM.md).
 
