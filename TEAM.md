@@ -14,7 +14,7 @@
 ## Roster
 
 | Name | Role | GitHub | Contact hours (ET) |
-|---|---|---|---|
+|Aashi Mehta|Architect and Implementer |@mehtaaashi05|9am to 7pm|
 
 ## RACI Matrix (Phase 1)
 
