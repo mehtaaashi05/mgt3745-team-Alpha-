@@ -1,25 +1,36 @@
-# ARCHITECTURE.md
+# DDR-001: bolt.new Specification Probe
 
-Stub from mgt3745-group-template. Accountable: the Architect.
+Status: PREPARED, NOT YET RUN. Do not treat this record as evidence that the probe occurred. The Specifier owns the probe and must complete the missing fields immediately before or after running it.
 
-## The Gate: Build, Buy, or Delegate
+## Task
 
-### Weights (commit before scores)
+Use the team's `context/FEATURES.md` as the sole project input to one bolt.new prompt, with no follow-up prompts. Record every assumption the tool made that the feature specification did not state in `docs/PROBE-001.md`. For each assumption, the Specifier must record a corresponding EARS row or an explicit exclusion in `context/FEATURES.md`. Do not commit generated code.
 
-### Scores
+## Tool and Model
 
-## ADR-001: <decision>
+- Tool: bolt.new, operated by StackBlitz.
+- Model/version: pending; record the exact model/version shown by the service.
+- Prompt and input revision/commit: pending; capture the exact prompt and `FEATURES.md` revision used.
+- Run date: pending.
 
-- **Status:**
-### Context
-### Options
-### Decision
-### Consequences
-### Revisit Trigger
+## Economic Rationale
 
-## Architecture Diagram
+The probe is intended to expose underspecified behavior before Phase 2 implementation. It is limited to one prompt and is not a substitute for Specifier judgment or user research.
 
-```mermaid
-flowchart LR
-    A["<component>"] --> B["<component>"]
-```
+## Trust Boundary
+
+- Accountable for the probe and submitted input: Rishika Sikhakolli, Specifier.
+- Accountable for this DDR: Aashi Mehta, Implementer.
+- Recipient: bolt.new / StackBlitz.
+- Intended input: `context/FEATURES.md` and the one probe prompt only.
+- Actual input and any additional data sent: pending; document after the run.
+- Do not submit credentials, secrets, or personal data.
+- The service's terms and handling of submitted content must be checked by the Specifier before submission.
+
+## Verification Performed
+
+Not yet performed. After the run, the Specifier must compare the generated result against the input, identify unstated assumptions, and verify that each finding is reflected as an EARS row or explicit exclusion in `FEATURES.md`. The team must not commit generated code.
+
+## Findings
+
+Pending the Specifier's probe. Complete this section with the findings and link each one to its change or exclusion in `docs/PROBE-001.md` and `context/FEATURES.md`.

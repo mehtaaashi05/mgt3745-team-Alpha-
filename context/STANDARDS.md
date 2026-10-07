@@ -1,33 +1,35 @@
 # ARCHITECTURE.md
 
-Status: ACTIVE. Accountable: Giancarlo (Architect); completed by Aashi Mehta as acting architect because the assigned architect is a silent member and the team proceeded without him. This file is the architecture record for the team problem selected in `docs/DACI-001.md`.
+Status: ACTIVE. Accountable: Giancarlo (Architect). This file records the architecture decision for the team's selected problem: a casual, photo-first travel diary for recording and rating places visited, browsing reviews by category, and eventually ranking places by city and category.
 
 ## The Gate: Build, Buy, or Delegate
 
 ### Weights (committed before scores)
 
-| Criterion | Weight (1-5) | Why this weight |
+| Criterion | Weight (1 to 5) | Why this weight |
 |---|---:|---|
-| Need: is the capability central to the team outcome? | 5 | This decision is about the team's core product behavior, so the architecture must serve the user need directly. |
-| Speed to a credible demo in three weeks | 5 | Phase 1 and Phase 2 are time-boxed, so a lightweight delivery path is essential. |
-| Team fit and maintainability | 4 | The team has a small, distributed group and needs a simple architecture we can all understand and review. |
-| Data and compliance risk | 4 | Browser-to-server data movement must be explicit, limited, and easy to explain. |
-| Switching cost from prior course work | 3 | We are taking the course stack seriously and using prior experience to keep the architecture simpler and less risky. |
+| Still wicked at team scale | 5 | The product must remain meaningfully complex when work is split across four contributors. |
+| Users the team can reach by Oct 22 | 4 | A solution with accessible users is more likely to be validated in time. |
+| Buildable on our stack in three weeks | 5 | The project is time-boxed and must be achievable within the course schedule. |
+| Data we can get legally and soon | 4 | The architecture should rely on data we can obtain without legal or operational risk. |
+| Meaning: at least three of us care | 4 | The solution needs enough team buy-in to stay realistic and motivating. |
+| Switching cost from prior course work | 3 | The design should use known patterns and limit retooling burden. |
 
 ### Scores
 
-| Option | Build in-house MVP | Buy managed service | Delegate to external provider |
+| Option | Build in-house | Buy managed service | Delegate to external service |
 |---|---:|---:|---:|
-| Need: solve the actual team problem | 5 | 3 | 2 |
-| Speed to demo | 5 | 4 | 3 |
-| Team skill fit | 5 | 4 | 2 |
-| Data/compliance risk | 4 | 4 | 3 |
+| Still wicked at team scale | 4 | 3 | 2 |
+| Reach by Oct 22 | 4 | 4 | 3 |
+| Buildable in three weeks | 5 | 4 | 2 |
+| Data risk | 4 | 4 | 3 |
+| Meaning to team | 4 | 3 | 2 |
 | Switching cost | 4 | 3 | 2 |
-| Weighted total | 90 | 72 | 48 |
+| Weighted total | 87 | 70 | 48 |
 
 ### Decision
 
-The team should build the core experience in a browser-first app and buy managed server-side services only where the course or product requires them. The project will delegate only the infrastructure boundaries (hosting, database, and external API calls) that are not the product's core logic. This keeps the core product in our control while avoiding a custom server stack the team cannot sustain in three weeks.
+The team should build the core product in a browser-first application and buy only the minimal managed backend services required for persistence and data crossing. This keeps the product infrastructure small, easy to review, and consistent with the limited timeline.
 
 ## ADR-001: Browser-first app with a minimal managed backend
 
@@ -35,48 +37,41 @@ The team should build the core experience in a browser-first app and buy managed
 
 ### Context
 
-The team needs a solution that can be built within the course time box, can be reviewed by a small team, and does not expose credentials or private user data in the repository. The critical crossing is user input and generated output leaving the browser, moving to a vendor-managed server or database service under the vendor's terms, and then being stored or processed before being returned to the browser. This crossing must be named, limited, and accountable. The accountable owner for that boundary is Aashi Mehta, Implementer, with the Specifier owning feature intent and the Architect owning the design decision.
+The project is a course-based team build that must remain understandable, reviewable, and secure. The critical architecture decision is where data crosses the browser trust boundary: what leaves the browser, to which vendor-managed service, under which terms, and who is accountable for the boundary. The service boundary must be explicit and the repository must remain credential-free. The accountable owner for the service boundary is Aashi Mehta, Implementer; the product intent stays with the Specifier and the architectural decision stays with the Architect.
 
-### Decision Drivers
+### Options
 
-- Keep the user-visible experience in the browser for fast iteration.
-- Use a managed server or database only for the necessary persistence and API boundaries.
-- Keep the repository credential-free and avoid storing secrets or personal data.
-- Make the architecture easy to explain in a short review and easy to maintain by a student team.
-
-### Options Considered
-
-1. Build the entire product as a single browser-only app with local storage or a local mock store.
-2. Build a lightweight browser app with a managed backend service for data storage and API calls.
-3. Delegate the core product logic to a third-party SaaS provider and only build a thin wrapper.
+1. Build the entire experience in the browser with no server-side persistence beyond local storage or a mock store.
+2. Build a browser-first experience and add a minimal managed backend for storage and API calls.
+3. Delegate the core product logic to a vendor-managed service and build only a thin client.
 
 ### Decision
 
-Use a browser-first application with a small server-side boundary for persistence and vendor-managed processing. In the course context, the likely crossing is browser-to-Cloudflare Worker or similar managed runtime; the Worker calls a managed database (for example D1/SQLite-like persistence) and returns only the minimal data needed to render the interface. No secret or credential lives in the repository, and the trust boundary is explicitly documented in `context/TOOLS.md` and `docs/DDR-001.md`.
+Use a browser-first application with a small managed server boundary for persistence and vendor-managed processing. The browser remains the primary product experience, while a minimal API layer handles the necessary data crossing and persistence. The likely trust boundary is browser-to-Cloudflare Worker or a similar managed runtime, followed by a managed database for storage, with all credentials kept out of the repository.
 
 ### Consequences
 
-- The team gains a straightforward build path and a clearer separation between client behavior and backend persistence.
-- Data handling becomes more explicit, which improves reviewability and auditability.
-- A managed vendor introduces operational constraints, vendor terms, and a harder-to-avoid dependency for the storage boundary.
-- Some product behaviors become slower to change because any schema or API contract update must be coordinated across the browser and server boundary.
-- A smaller backend means that some policy and data-processing decisions become less flexible than a fully custom app.
+- The team can iterate quickly on the core user experience while keeping the backend small and reviewable.
+- The architecture remains familiar to a small student team and fits the course time box.
+- Data handling becomes explicit, which improves reviewability and reduces accidental secret exposure.
+- A managed vendor introduces operational constraints, vendor terms, and a dependency that gets harder to avoid once the boundary is used.
+- Some product changes become more complex because browser state and backend persistence must remain in sync.
 
 ### Revisit Trigger
 
-This ADR should be revisited if the team adds a data-retention requirement, user accounts, external vendor APIs beyond the original scope, or a platform requirement that makes the cloud boundary materially different from the current browser-first architecture.
+Revisit this ADR if the team adds a data-retention requirement, user accounts, a richer backend contract, or a vendor dependency that materially changes the browser-to-server crossing.
 
 ## Architecture Diagram
 
 ```mermaid
 flowchart LR
     U[User Browser] --> UI[Web UI / DOM]
-    UI --> V[Validation and client-side state]
-    V --> P[Cloudflare Worker or managed API boundary]
-    P --> D[(Managed database / persistence)]
+    UI --> V[Client-side validation and state]
+    V --> P[Managed API boundary / Cloudflare Worker]
+    P --> D[(Managed database or persistence)]
     P --> E[External service call if required]
     D --> P
     P --> UI
 ```
 
-This diagram matches ADR-001: the browser remains the primary experience, while the managed boundary is explicitly treated as the only place where data crosses out of the browser and into vendor infrastructure.
+This diagram matches ADR-001: the browser remains the main experience, and the only intentional trust boundary is the managed API layer where non-public data leaves the browser and enters vendor-controlled infrastructure.
