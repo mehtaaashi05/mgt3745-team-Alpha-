@@ -15,6 +15,7 @@
 
 | Name | Role | GitHub | Contact hours (ET) |
 |---|---|---|---|
+| Rishika Sikhakolli | Specifier | @rishikasikhakolli | 9am-8pm |
 
 ## RACI Matrix (Phase 1)
 
