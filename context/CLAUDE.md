@@ -1,50 +1,52 @@
-# CLAUDE.md
+# STANDARDS.md
 
-Status: DRAFT. Accountable: Aashi Mehta, Implementer. This policy is a
-conservative starting point and must be confirmed by the team's Approver.
-Until an Approver is named in `docs/DACI-001.md`, do not treat a disputed AI
-use as approved.
+Status: ACTIVE. Accountable: Aashi Mehta, Implementer.
+This file is the source of truth for the project and overrides any conflict with `context/CLAUDE.md`. The stricter rule wins when requirements disagree.
 
-## Approved Tools
+## Merge Record
 
-This list is proposed and pending confirmation by the team's Approver.
+- Merged: The requirement from the HW5 standards to use role-distinguishing names such as `notes`, `candidate`, and `nextNotes` in `app.js` overrides vague names such as `data` or `value`. This is stricter and more specific than the general JavaScript naming rule.
+- Merged: The requirement to avoid `innerHTML`, `outerHTML`, and `insertAdjacentHTML` on note content remains the project rule for user-entered text, even though the exact prompt may say it only matters for a specific task. The project keeps the stricter rule and documents the task-specific reminder in the prompt instead of in `CLAUDE.md`.
+- Merged: The requirement that failed requests be shown to the user in the interface, not only in the console, is retained. This is stricter than a generic error-handling rule.
+- Merged: No credential, token, secret, or personal data may ever be committed to the repository; database IDs are addresses and may appear in a config file only when they are not credentials.
+- Merged: Comments explain why the code exists, not what the code does; they should remain minimal and focused on the invariant being protected.
 
-- GitHub Copilot in VS Code: proposed for drafting and review assistance,
-  subject to this policy and the applicable RACI assignment.
-- bolt.new (StackBlitz): required for the specification probe. The Specifier
-  must approve the exact, non-sensitive input before it is submitted.
-- No other AI tool is approved until the team's Approver records that decision.
+## Documents
 
-## What AI May Do
+- Inline comments explain why a decision exists, not what the code does.
+- Keep README files, architecture artifacts, and team governance files current with the project decisions and status.
+- Write so a teammate or reviewer outside the original discussion can understand the artifact.
+- If `STANDARDS.md` and `CLAUDE.md` disagree, `STANDARDS.md` is the source of truth and `CLAUDE.md` is repaired to match.
 
-- AI may be Responsible or Consulted only for a RACI row that explicitly
-  assigns it that role and names a human Accountable owner.
-- AI may draft, summarize, suggest, and identify possible issues. A human
-  owner verifies the result and is responsible for the final artifact.
-- AI may not make or represent team decisions, user-research findings, or
-  approvals on behalf of a person.
+## Code (Phase 2)
 
-## What AI May Never Do Here
+- Use descriptive camelCase for JavaScript identifiers and kebab-case for new filenames.
+- Use descriptive names for values that cross a browser/server boundary.
+- Keep structure in `index.html`, presentation in `styles.css`, and behavior in `app.js`.
+- Keep application code inside the IIFE in `app.js` so nothing becomes an accidental global.
+- Use parameterized SQL or safe bind values rather than string concatenation with user input.
+- Do not insert user-entered text with `innerHTML`, `outerHTML`, or `insertAdjacentHTML`; render text with DOM APIs and `textContent`.
+- Show a failed request to the user on the page and do not throw it in the console.
+- Never leave `console.log` calls or other debug output in committed code.
+- Never commit credentials, tokens, keys, or personal data. Database identifiers may appear only when they are not credentials.
+- Preserve the invariants that storage succeeds before the interface changes; do not reorder a successful save and the resulting UI update.
 
-- AI may never be Accountable, approve its own work, or merge a pull request.
-- AI may never receive credentials, tokens, secrets, or real users' private
-  personal data.
-- AI may never invent teammate agreement, user evidence, scores, test results,
-  or tool-probe findings.
-- AI-generated work may never be merged without human verification and the
-  required independent pull-request review.
+## Git
 
-## The DDR Rule
+- Begin each commit message with an action verb and name the user-visible result; for example, `Keep note text after a failed save`.
+- Work on a branch and merge into `main` only through a pull request reviewed by someone other than the author.
+- Use the pull request description sections `What changed`, `RACI row`, `How to check it`, and `AI use`.
+- End every pull request description with an AI Use line: `None` or a link to the relevant DDR.
+- After branch protection is enabled, do not commit directly to `main`.
+- Never put credentials in a commit, pull request, or repository document.
 
-Record delegated AI work in a DDR before relying on its output. The DDR names
-the tool and model, input and data crossing the trust boundary, the human
-Accountable owner, economic rationale, verification performed, and findings.
-The pull request description links the DDR. For the required bolt.new probe,
-the Specifier is Accountable and the Implementer maintains `docs/DDR-001.md`.
+## Required AI Governance Alignment
 
-## When We Disagree About AI Use
+- AI output is allowed only when the project RACI explicitly permits it and a human is accountable for the final artifact.
+- The team must record delegated AI work in a DDR before relying on the output.
+- The human owner verifies the artifact and is responsible for the final result.
+- AI may not approve its own work, merge a pull request, or make team decisions on behalf of a person.
 
-The team's Approver, named in `docs/DACI-001.md`, decides after consulting the
-affected artifact's Accountable owner. Record the decision and rationale in a
-DACI. Until that Approver is identified and decides, do not proceed with the
-disputed use.
+## Conflict Resolution Policy
+
+When multiple rules overlap, the stricter one stands. The team uses this file as the normative requirement set for code quality, documentation, and repository hygiene.
