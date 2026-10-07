@@ -30,6 +30,13 @@
 | Meaning: at least three of us care |3|If everyone cares, effort and dedication will flourish. Weighted below the feasibility criteria because interest is the thing most likely to grow once we talk to real users, and least likely to predict accurately today.|
 
 ## Scores (1 to 5, median of private scores)
+| Criterion | Weight | Music | Travel | Directory |
+| --- | --- | --- | --- | --- |
+| Wicked | 5  |  5 |  3 | 4  |
+| Users | 4  | 4 |  5 |  3 |
+| Stack | 5  |  2 | 3  | 4  |
+| Data | 2  | 2  | 4  | 2  |
+| Meaning | 3  |  3 | 5  |  2 |
 
 ## Decision
 
