@@ -31,18 +31,12 @@ agreement was reported in the project discussion on 2026-10-07.
 | Limits exposure of personal reviews and photos to non-followers | 5 | 4 | 2 | 2 |
 | Buildable and testable by the team in Phase 2 | 4 | 4 | 2 | 4 |
 | Reversible if later requirements change | 3 | 4 | 2 | 4 |
-| **Weighted total (max 105)** | | **93** | **46** | **73** |
+| **Weighted total (max 110)** | | **98** | **49** | **73** |
 
 **Score rationale**
 
-- **Build:** Strongest fit because the team can shape the review and category
-  flow directly while keeping the prototype within the required browser-only
-  boundary. A 4 for buildability and reversibility reflects that photo
-  storage still needs validation and future ranking may change the design.
-- **Buy:** Fastest to access (5 for buildability), but no candidate product has
-  been evaluated. A generic existing product is a weak fit for the described
-  experience, may require hosted services/network calls, and would constrain
-  review/photo data handling and future changes.
+- **Build:** This is the strongest fit. The team can shape the review and category flow directly and keep the prototype browser-only, with no added server, database, or credentials. Buildability and reversibility get a 4 because storing photos in browser storage still needs testing, and a future ranking feature may require changing the data model.
+- **Buy:** The team hasn't evaluated a specific product yet. A generic hosted review product or SDK fits the photo-first, category-filtered experience poorly. It would likely need network calls and a third-party service, which conflicts with the no-library, no-network-call standard and sends personal reviews and photos off-device. Buildability gets a 2 because the team would mostly be configuring and working around someone else's product, which leaves little to build and test in Phase 2. Reversibility gets a 2 because data and workflows would be tied to the vendor.
 - **Delegate:** Could accelerate a prototype, but the team would still need to
   specify, verify, and own it. It has weaker fit with the no-library/no-call
   constraint and data-boundary preference. The required bolt.new probe is
