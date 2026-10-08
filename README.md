@@ -9,9 +9,9 @@ A casual, photo-first travel diary for recording and rating places visited, brow
 | Member | Phase 1 | Phase 2 | Final |
 |---|---|---|---|
 | Semaj Johnson II | Reviewer | Specifier | Architect |
-| Aashi Mehta | Implementer | Architect | Specifier |
+| Aashi Mehta | Implemeter | Architect | Specifier |
 | Rishika Sikhakolli | Specifier | Reviewer | Implementer |
-| Giancarlo | Architect | Implementer | Reviewer |
+| Giancarlo | Architect | Architect | Reviewer |
 
 Working agreement, RACI matrix, and rotation plan: [TEAM.md](TEAM.md).
 
