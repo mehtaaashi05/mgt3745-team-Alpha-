@@ -6,7 +6,7 @@ This file governs every AI assistant used on this repository, whatever the tool.
 
 | Tool | Allowed role in our RACI | Notes |
 |---|---|---|
-| GitHub Copilot (in Codespaces) | R for drafts; C for review suggestions | Recorded in TOOLS.md |
+| GitHub Copilot | R for drafts; C for review suggestions | Recorded in TOOLS.md |
 | Claude (chat) | C only in Phase 1 | Critique and explanation; no files pasted except context files |
 | bolt.new | R for specification probes and bounded builds with a DDR | Output never committed without a DDR and a human review |
 
