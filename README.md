@@ -1,6 +1,4 @@
-# <Team Name>: <Product or Problem in a Few Words>
-
-> Replace every line in angle brackets. A README that still carries template placeholders loses points. The demo repository at https://github.com/johnmcswain/mgt3745-team-demo shows a finished Phase 1 version of every file here.
+# <Team Name> Alpha - A travel app
 
 ## What
 
@@ -11,15 +9,15 @@ A casual, photo-first travel diary for recording and rating places visited, brow
 | Member | Phase 1 | Phase 2 | Final |
 |---|---|---|---|
 | Semaj Johnson II | Reviewer | Specifier | Architect |
-| Aashi Mehta | Implementer | Reviewer | Specifier |
-| Rishika Sikhakolli | Specifier | Architect | Implementer |
+| Aashi Mehta | Implementer | Architect | Specifier |
+| Rishika Sikhakolli | Specifier | Reviewer | Implementer |
 | Giancarlo | Architect | Implementer | Reviewer |
 
 Working agreement, RACI matrix, and rotation plan: [TEAM.md](TEAM.md).
 
 ## Status
 
-Phase 1 decided four things: which problem to build (DACI-001), what to build (FEATURES.md), where it runs (ADR-001), and what would prove it works (EVALS.md). Phase 2 builds F1 (STILL NEED TO UPDATE!!!) and F2 (STILL NEED TO UPDATE!!!) first, because the riskiest assumption lives in F1.
+Phase 1 decided four things: which problem to build (DACI-001), what to build (FEATURES.md), where it runs (ADR-001), and what would prove it works (EVALS.md). Phase 2 builds F1 (Accounts), F2 (Creating a trip and inviting members), F3 (Add a moment to a trip), and F4 (Trip view with who added what) first, because the riskiest assumption lives in these.
 
 
 ## Links, in Reading Order
@@ -38,4 +36,4 @@ Phase 1 decided four things: which problem to build (DACI-001), what to build (F
 
 ## AI Use
 
-n Phase 1, AI tools were Responsible for one task (the bolt.new specification probe, DDR-001) and Consulted on 4 (drafting and critiquing of PROJECT.md, FEATURES.md, ARCHITECTURE.md, and README.md). No AI output was committed without a named reviewer. Nothing bolt.new generated is in this repository.
+In Phase 1, AI tools were Responsible for one task (the bolt.new specification probe, DDR-001) and Consulted on 4 (drafting and critiquing of PROJECT.md, FEATURES.md, ARCHITECTURE.md, README.md, STANDARDS.md, TOOLS.md, and CLAUDE.md). No AI output was committed without a named reviewer. Nothing bolt.new generated is in this repository.
