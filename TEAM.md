@@ -16,7 +16,7 @@
 | Semaj Johnson II | Reviewer | @semajjohnson | 9am–7pm |
 | Aashi Mehta | Implementer | @mehtaaashi05 | 9am–7pm |
 | Rishika Sikhakolli | Specifier | @rishikasikhakolli | 9am–8pm |
-| Giancarlo | Architect | @giancarlo | 9am–7pm |
+| Giancarlo | Architect | @GiancarloMartinez-Saldana | 9am–7pm |
 
 ## RACI Matrix (Phase 1)
 
