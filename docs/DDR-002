@@ -1,0 +1,25 @@
+# DDR-001: Copilot use for STANDARDS.md
+
+## Task
+
+Use Copilot to merge the STANDARDS from all teammates to create one main STANDARDS.md file for this project.
+
+## Tool and Model
+
+Copilot, 2026-10-06, model as reported in the Github interface at the time of the run. Run from Aashi's account.
+
+## Economic Rationale
+
+A human reading STANDARDS.MD for each teammate and merging the STANDARDS effectively: about 2.5 hours and the potential mistakes a human would make. Copilot run: 15 minutes. Recording findings: 45 minutes. Net saving about 1 hour and 30 minutes, and Copilot finds gaps a human reading it cannot
+
+## Trust Boundary
+
+Each member's STANDARDS.md crossed to Copilot after getting team members' permission. It contains no customer data, synthetic or real, and no credentials. Accountable: Aashi. TOOLS.md row added.
+
+## Verification Performed
+
+Aashi checked the standards to ensure the model did not halluciante and made sure that no important rules were left out. 
+
+## Findings
+
+Copilot did a good job of coming up with the STANDARDS, however there were some minor formatting and wording errors that I fixed as the implementer.
