@@ -1,4 +1,4 @@
-# <Team Name>: Alpha - A travel app
+# <Team Name> Alpha - A travel app
 
 ## What
 
@@ -9,8 +9,8 @@ A casual, photo-first travel diary for recording and rating places visited, brow
 | Member | Phase 1 | Phase 2 | Final |
 |---|---|---|---|
 | Semaj Johnson II | Reviewer | Specifier | Architect |
-| Aashi Mehta | Implementer | Reviewer | Specifier |
-| Rishika Sikhakolli | Specifier | Architect | Implementer |
+| Aashi Mehta | Implementer | Architect | Specifier |
+| Rishika Sikhakolli | Specifier | Reviewer | Implementer |
 | Giancarlo | Architect | Implementer | Reviewer |
 
 Working agreement, RACI matrix, and rotation plan: [TEAM.md](TEAM.md).
@@ -36,4 +36,4 @@ Phase 1 decided four things: which problem to build (DACI-001), what to build (F
 
 ## AI Use
 
-n Phase 1, AI tools were Responsible for one task (the bolt.new specification probe, DDR-001) and Consulted on 4 (drafting and critiquing of PROJECT.md, FEATURES.md, ARCHITECTURE.md, README.md, STANDARDS.md, TOOLS.md, and CLAUDE.md). No AI output was committed without a named reviewer. Nothing bolt.new generated is in this repository.
+In Phase 1, AI tools were Responsible for one task (the bolt.new specification probe, DDR-001) and Consulted on 4 (drafting and critiquing of PROJECT.md, FEATURES.md, ARCHITECTURE.md, README.md, STANDARDS.md, TOOLS.md, and CLAUDE.md). No AI output was committed without a named reviewer. Nothing bolt.new generated is in this repository.
