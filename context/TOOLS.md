@@ -4,7 +4,6 @@ Accountable: Aashi Mehta, Implementer.
 One row per external service. No credentials in this file, ever.
 
 
-
 | Service | Trusted with | Credentials live | Data crossing the boundary | Switching cost |
 |---|---|---|---|---|
 | GitHub | The project repository, source files, issues, pull requests, reviews, and commit history | Each member's own GitHub account; no credentials in the repository | Committed material and collaboration activity are stored by GitHub in a public repository. Aashi Mehta is the Implementer's contact for repository settings. | Low to moderate: clone the Git repository and move collaboration to another Git host. |
