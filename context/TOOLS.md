@@ -1,16 +1,12 @@
 # TOOLS.md
 
-Draft by Aashi Mehta, Implementer. The team has not yet confirmed its Phase 2
-services or named the Specifier. The bolt.new probe is required but has not
-been run. Never put credentials in this file or elsewhere in the repository.
+One row per external service. No credentials in this file, ever.
 
 | Service | Trusted with | Credentials live | Crossing statement | Switching cost |
 |---|---|---|---|---|
-| GitHub | This public repository, its source files, pull requests, reviews, and commit history | Each member's GitHub account; no credentials in the repository | Everything committed to this repository, including drafts and review comments, is stored by GitHub in a public repository. The team is accountable for its contents, and Aashi Mehta is accountable for repository settings as Implementer. | Low: clone the repository and move collaboration to another Git host |
-| GitHub Copilot in VS Code | Project-document context and prompts supplied for drafting this Implementer documentation | Individual GitHub accounts; no credentials in the repository | Repository-document context and prompts supplied for this drafting assistance are sent to GitHub Copilot. Aashi Mehta is accountable for what is supplied and for reviewing all suggestions before use. | Low: turn it off and edit the documents directly |
-| bolt.new and StackBlitz | The team's `context/FEATURES.md` and the single specification-probe prompt; actual input is pending | The Specifier's StackBlitz account; no credentials in the repository | The Specifier will send the agreed `FEATURES.md` and one prompt to bolt.new, operated by StackBlitz, for the required probe. The team's Specifier is accountable for the submitted material and review of the result; the Specifier has not yet been identified, and the probe has not been run. | Low: document assumptions and exclusions manually without using generated code |
-
-Add a row before the team uses another external service. Update the bolt.new
-row and `docs/DDR-001.md` after the probe with the actual input, date, and
-accountable Specifier. Add Cloudflare, D1, Wrangler, or other product services
-only if the team selects them for Phase 2.
+| GitHub | All files and commit history; each member's access token | Each member's GitHub account | Everything in this repository, including every draft and review comment, is stored by GitHub (Microsoft) in a public repository. The team is accountable, and Aashi answers for its settings. | Low: git clone anywhere |
+| GitHub Copilot in VS Code | Repository contents as context for suggestions | Each member's GitHub account | Any file open in the editor may be sent to Copilot as context, so nothing sensitive is ever in the repository. Each member is accountable for what Copilot sees in their session. | Low: turn it off |
+| Claude (chat) | Context files pasted for critique | Each member's own Anthropic account | Only files from /context and /docs are pasted into Claude, by the member doing the pasting, who is accountable for what they paste. | Low: stop using it |
+| bolt.new and StackBlitz | FEATURES.md for the specification probe | Rishika's StackBlitz account | FEATURES.md crossed to bolt.new and StackBlitz on 2026-10-06 for the probe; no customer data, synthetic or otherwise, was included. Rishika is accountable. | Low: output is not kept in the repository |
+| Cloudflare Workers and D1 (Phase 2, planned) | User-entered place data, synthetic reviews, and request metadata including IP addresses | Aashi's Cloudflare account; wrangler token in their codespace | Place entries typed into the field and the review list will be stored on D1 under Cloudflare's free-tier terms, in a region we do not choose. Aashi is accountable until rotation. | Medium: export with wrangler d1 export, rewrite one Worker |
+| wrangler (npm) | Deploy access to the Cloudflare account | Token inside the codespace | An npm package maintained by Cloudflare runs with deploy rights to our account. The Implementer is accountable for its version and configuration. | Low: replaceable by the Cloudflare dashboard |
