@@ -1,29 +1,24 @@
-# <Team Name>: <Product or Problem in a Few Words>
-
-> Replace every line in angle brackets. A README that still carries template placeholders loses points. The demo repository at https://github.com/johnmcswain/mgt3745-team-demo shows a finished Phase 1 version of every file here.
+# <Team Name> Alpha - A travel app
 
 ## What
 
-<The team problem in one sentence.>
+A casual, photo-first travel diary for recording and rating places visited, browsing reviews by category, and eventually ranking places by city and category.
 
 ## Team
 
-| Member | Phase 1 role | Phase 2 role | Final role |
+| Member | Phase 1 | Phase 2 | Final |
 |---|---|---|---|
-|Aashi Mehta| Implementer | Architect | Specifier |
-| Rishika Sikhakoli | <role> | <role> | <role> |
-| Semaj Johnson II | <role> | <role> | <role> |
-| Giancarlo Martinez-Saldana | <role> | <role> | <role> |
+| Semaj Johnson II | Reviewer | Specifier | Architect |
+| Aashi Mehta | Implementer | Architect | Specifier |
+| Rishika Sikhakolli | Specifier | Reviewer | Implementer |
+| Giancarlo | Architect | Implementer | Reviewer |
 
 Working agreement, RACI matrix, and rotation plan: [TEAM.md](TEAM.md).
 
 ## Status
 
-<What Phase 1 decided, and what Phase 2 builds first.>
+Phase 1 decided four things: which problem to build (DACI-001), what to build (FEATURES.md), where it runs (ADR-001), and what would prove it works (EVALS.md). Phase 2 builds F1 (Accounts), F2 (Creating a trip and inviting members), F3 (Add a moment to a trip), and F4 (Trip view with who added what) first, because the riskiest assumption lives in these.
 
-## See It Work
-
-<Phase 2: the deployed URL and a GIF or screenshots of the build.>
 
 ## Links, in Reading Order
 
@@ -41,4 +36,4 @@ Working agreement, RACI matrix, and rotation plan: [TEAM.md](TEAM.md).
 
 ## AI Use
 
-<Where AI tools were Responsible or Consulted, each with a link to its DDR or pull request.>
+In Phase 1, AI tools were Responsible for one task (the bolt.new specification probe, DDR-001) and Consulted on 4 (drafting and critiquing of PROJECT.md, FEATURES.md, ARCHITECTURE.md, README.md, STANDARDS.md, TOOLS.md, and CLAUDE.md). No AI output was committed without a named reviewer. Nothing bolt.new generated is in this repository.
