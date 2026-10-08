@@ -35,6 +35,7 @@ Merged from three members' HW5 versions by Aashi Mehta, Implementer. Where two r
 - Pull request description has four parts: What changed, RACI row, How to check it, AI use.
 - Work on a branch and merge into `main` only through a pull request reviewed by someone other than the author.
 - After branch protection is enabled, do not commit directly to `main`.
+- After branch protection is enabled, do not commit directly to `main`.
 - Never put credentials in a commit, pull request, or repository document.
 
 ## Merge Record
@@ -48,3 +49,6 @@ Merged from three members' HW5 versions by Aashi Mehta, Implementer. Where two r
 ## If STANDARDS.md and CLAUDE.md disagree
 
 STANDARDS.md is normative. Repair CLAUDE.md to match rather than following them separately.
+
+## AI Use
+Copilot in GitHub was used to draft the merged STANDARDS. A DDR was created for this. [DDR-002](docs/DDR-002.md)
