@@ -64,9 +64,15 @@ Each member commits their own stake, in their own commit, before any Phase 2 cod
 
 *Result:*
 
-### Rishika Sikhakolli, Specifier — committed <date>
+### Rishika Sikhakolli, Specifier — committed <2026-10-08>
 
-*To be written and committed by Rishika.*
+**Prediction:** People might have things they want to add to the trip feeds that don't have all three criteria (photo, review, location name). F3-1 makes the note optional, members will mostly post a photo and a place, so searching by a word from the note (F5-1) will find fewer moments than searching by place, date, or member.
+
+**How we will check:** During user testing, count what is added across all test trips. If the majority f them include a note, this prediction is wrong.
+
+**Confidence:** 60%
+
+**Why:** Profile 1 shares quickly and has little patience for writing, and the probe showed that requiring all three fields was a guess, so F3-1 now lets people skip the note. Profile 2 wants to say more than a caption, which is why I am not more confident. If this is right, F5 should treat place, date, and member as the main ways to search.
 
 ### Aashi Mehta, Implementer — committed <date>
 
