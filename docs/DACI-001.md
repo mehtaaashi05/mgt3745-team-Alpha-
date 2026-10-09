@@ -18,6 +18,7 @@
 |Music App|Semaj|Platform for pooling song reccomendations|
 |Travel App|Rishika|A travel app with the ability to review and rank things you did or places you saw in casual, quick way.|
 |Opt in Directory| Aashi| Opt-in Directory of employees who are  willing to chat with hesitant interns, trying to explore other parts of the company.|
+|Subscription Tracker|Giancarlo|A platform for tracking recurring subscriptions so people can see what they pay for, when it renews, and what to cancel.|
 
 ## Weights (committed before scores)
 
@@ -38,6 +39,16 @@
 | Data we can get legally and soon | 2 | 2.75 | 3.75 | 2.00 |
 | Meaning: at least three of us care | 3 | 3.50 | 4.25 | 3.00 |
 | **Weighted total (max 95)** | | **67.0** | **74.75** | **64.0** |
+
+### Giancarlo's private scores
+| Criterion | Weight | Music App | Travel App | Opt-in Directory | Subscription Tracker |
+|---|---|---|---|---|---|
+| Still wicked at team scale | 5 | 3 | 4 | 3 | 2 |
+| Users reachable by Oct 22 | 4 | 4 | 4 | 2 | 5 |
+| Buildable in three weeks | 5 | 3 | 3 | 4 | 4 |
+| Data legally and soon | 2 | 3 | 4 | 2 | 3 |
+| Meaning: at least three of us care | 3 | 3 | 4 | 2 | 3 |
+| **Weighted total (max 95)** | | **61** | **71** | **53** | **65** |
 
 ## Decision
 **The team builds the Travel App**, Rishika's HW1 problem: a casual, quick way to review and rank the places you went and the things you did. Approved by Rishika on 2026-10-07.

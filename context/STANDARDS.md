@@ -47,4 +47,5 @@ Merged from three members' HW5 versions by Aashi Mehta, Implementer. Where two r
 
 ## If STANDARDS.md and CLAUDE.md disagree
 
-STANDARDS.md is normative. Repair CLAUDE.md to match rather than following them separately.
+STANDARDS.md is normative. Repair CLAUDE.md to match rather than following them separately. 
+Copilot in GitHub was used to draft the merged STANDARDS. A DDR was created for this. [DDR-002](../docs/DDR-002.md)

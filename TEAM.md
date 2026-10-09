@@ -30,7 +30,7 @@ R = Responsible (does the work), A = Accountable (answers for it; exactly one pe
 | context/USERS.md | R, A | I | I | C | – |
 | context/FEATURES.md | R, A | C | I | C | C |
 | context/ARCHITECTURE.md | C | R, A | C | C | C |
-| context/STANDARDS.md, TOOLS.md, CLAUDE.md | I | C | R, A | C | – |
+| context/STANDARDS.md, TOOLS.md, CLAUDE.md | I | C | R, A | C | C |
 | .github/CODEOWNERS and branch protection | I | I | R, A | C | – |
 | docs/PROBE-001.md and docs/DDR-001.md | A | I | R (DDR) | C | R (probe; A is Rishika) |
 | context/EVALS.md (OST, RAT) | C | C | I | R, A | – |
