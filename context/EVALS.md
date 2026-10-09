@@ -52,17 +52,15 @@ Each member commits their own stake, in their own commit, before any Phase 2 cod
 
 ### Semaj Johnson II, Reviewer — committed 2026-10-07
 
-**Tight:** fewer than half of the moments created during Phase 2 testing will carry all three of photo, note, and place. F3-1 allows any one of them, and I expect people to use that permission constantly rather than occasionally.
+**Prediction:** Fewer than half of the moments created during Phase 2 testing will carry all three of photo, note, and place. F3-1 allows any one of the three, and I expect people to use that permission constantly rather than occasionally.
 
-*Result:*
+**How we will check:** Count every moment created across all test trips and sort by how many of the three fields it has. If half or more carry all three, this prediction is wrong.
 
-**Loose:** search (F5) will be used less than we expect during Phase 2, because our test trips will be too short for anything to get lost in.
+**Confidence:** 75%
 
-*Result:*
+**Why:** F3 exists because capture has to be fast enough to beat the group chat. Anything that makes a moment take longer gets skipped in the moment it was meant to capture. If this is right, F4-1 and F5-1 both need to read well against mostly-partial records, and the trip view cannot assume a note is there.
 
-**Open:** when a trip has moments from more than one member, what do people look at first — the moments in order, or who added them? I do not know, and F4 treats both as equally important.
-
-*Result:*
+**How we will check:** Watch three people open a multi-member test trip without instruction and note what they say first.
 
 ### Rishika Sikhakolli, Specifier — committed <2026-10-08>
 
@@ -88,9 +86,6 @@ Each member commits their own stake, in their own commit, before any Phase 2 cod
 
 *Result:*
 
-### Giancarlo Martinez-Saldana, Architect — committed <date>
-
-*To be written and committed by Giancarlo.*
 
 ### Giancarlo (Architect), committed 2026-10-08
 
