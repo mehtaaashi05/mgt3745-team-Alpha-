@@ -9,7 +9,7 @@ Accountable: Rishika, Specifier. Consulted: Semaj, Reviewer.
 | Rishika Sikhakolli | Two interviews on sharing travel moments (INT-01, Sept 5; INT-02, Sept 7) | Profile 1, Profile 2 |
 | Semaj Johnson | Two interviews on music discovery (Interview 1 and 2, Sept 2026) | Profile 3 |
 | Aashi Mehta | Two interviews on intern team exploration (INT-01, Sept 2; INT-02, Sept 3) | Not used. The research is about workplace career moves, with no travel, photo, or sharing behavior to draw on. |
-
+|Giancarlo Martinez Saldana | Two interviews on subscription tracking habits and hassles. (INT-01 Sept 3, INT-02, Sept 4)| Not used.
 ## Profile 1: Rishika, Specifier
 - **Context.** Full-time working professional who travels casually [known]. Shares trip moments by texting friends directly, many times a day while traveling, instead of posting to social media [known]. Sends photos, short stories, and places he loved, in the moment [known]. Likes knowing what his friends are up to too [known]. Has little patience for long reviews or blogging [assumed]. Source: Rishika, INT-01.
 - **Job statement.** When something funny or worth remembering happens on a trip, I want to share it with my friends right away without the pressure of a public post, so I can bring them along on what I am doing.
