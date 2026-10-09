@@ -19,51 +19,64 @@ not a committed feature in this decision.
 | Buildable and testable by the team in Phase 2 | 4 | Phase 2 is three weeks. We must be able to run, inspect, and fix the result ourselves. |
 | Switching cost, scored from HW4 and HW5 experience | 3 | In HW4 and HW5, leaving our own Worker and D1 took one `wrangler d1 export` and a rewrite of one Worker. Leaving a hosted product means losing data or re-entering it, so this decides how reversible the choice is. |
 
-### Scores
+### Scores (1 to 5)
 
-Scores are added in a separate commit after the weights above.
-## ADR-001: Build a Browser-Only Travel Review Prototype
+| Criterion | Weight | Build: static page, Cloudflare Worker, D1 | Buy: off-the-shelf shared trip album (for example, Google Photos shared albums) | Delegate: bolt.new-generated and hosted app |
+|---|---:|---:|---:|---:|
+| Supports the group-trip flow (F1 to F4) | 5 | 5 | 3 | 4 |
+| Fits the course stack and STANDARDS.md | 4 | 5 | 1 | 2 |
+| Limits exposure of trip photos and notes | 5 | 4 | 2 | 2 |
+| Buildable and testable by the team in Phase 2 | 4 | 4 | 2 | 3 |
+| Switching cost, scored from HW4 and HW5 experience | 3 | 4 | 1 | 2 |
+| **Weighted total (max 105)** | | **93** | **40** | **56** |
 
-- **Status:** Status: Accepted, 2026-010-07. Driver: Semaj. Approver: Rishika.
+**Score rationale**
+
+- **Build:** We control every screen and every row F1 to F4 needs, on the stack we used in HW4 and HW5. Exposure is a 4, not a 5, because data still crosses to Cloudflare. Buildability is a 4 because accounts and photo storage are new to us.
+- **Buy:** A shared album handles photos and shows who added them, but not notes, places, search (F5), or our invite rules. It sits outside our stack, sends photos to another large vendor, and leaves nothing for us to build or test. Leaving it later means exporting albums by hand, so switching cost scores 1.
+- **Delegate:** The bolt.new probe showed it can produce a plausible app quickly, but it guessed six things our spec did not say (PROBE-001). We would own code we did not write, hosted outside our stack, and moving off its hosting means rewriting the backend.
+
+## ADR-001: Build the Travel App on Cloudflare Workers and D1
+
+### Status
+
+Accepted, 2026-10-08. Driver: Giancarlo Martinez-Saldana (Architect). Approver: Rishika Sikhakolli.
 
 ### Context
 
-The product concept is a casual travel-review app where people add visited
-places with photos, ratings, and reviews, then browse using a category filter.
-The future idea is to rank places by city and selected category. The repository
-does not yet contain application source code.
+The team is building a group trip record (PROJECT.md): members sign up (F1), create a trip and invite others by link (F2), add moments with a photo, note, or place (F3), and see who added what (F4). Accounts and shared trips need a server; a browser-only app cannot share a trip between people.
+
+The riskiest assumption in EVALS.md is that people add moments *during* a trip, not after. That makes capture speed on a phone the constraint that matters most, which favors a small static page and a single write endpoint over a large framework or hosted product.
+
+**The crossing.** Account details (email, username, and a password hash, never the password itself), trip names, invite links, moments (photos, notes, places), member names on each moment, and request metadata including IP addresses leave the browser and go to Cloudflare (Workers for the API, D1 for storage), under Cloudflare's free-plan terms, in a region we do not choose. Aashi Mehta, who holds the Cloudflare account, is accountable for this crossing (TOOLS.md).
 
 ### Options
 
-1. Build a static, browser-only prototype using the web platform.
-2. Buy or adopt a hosted review product or third-party SDK.
-3. Delegate the product implementation to a code-generation service.
+1. **Build:** static page, Cloudflare Worker, and D1, written by the team. Gate total 93.
+2. **Buy:** an off-the-shelf shared trip album. Gate total 40.
+3. **Delegate:** a bolt.new-generated and hosted app. Gate total 56.
 
-### Proposed Decision
+### Decision
 
-Build option 1 in-house for the first prototype. If approved, keep structure in `index.html`, presentation in `styles.css`, and behavior in `app.js`; put application behavior inside an IIFE. Do not add a framework, external API, hosted database, or credential.
-
+Build option 1. Structure lives in `index.html`, presentation in `styles.css`, and behavior in `app.js`; one Worker serves the API, and D1 stores accounts, trips, members, and moments. All SQL goes through `prepare().bind()` (STANDARDS.md). No other external service is added without a new ADR and a TOOLS.md row.
 
 ### Consequences
 
-- The prototype avoids exposing review and photo data to an added server or third-party SDK.
-- It can be served as static files and tested without service credentials.
-- Local-only storage limits data to the current browser and device; it does  not provide accounts, synchronization, recovery, or community rankings.
-- Browser storage capacity and photo handling must be tested before promising
-  reliable storage of uploaded images.
-- A future shared ranking feature may require a backend and a revised architecture decision; it must not bypass the team's trust and SQL-binding standards.
+- Trip data stays with one vendor (Cloudflare), and the team controls every screen F1 to F4 needs.
+- Leaving later is one `wrangler d1 export` and a rewrite of one Worker, as in HW4 and HW5.
+- **Harder:** we now own account security. Storing password hashes, checking invite links, and blocking non-members from private trips (F2-2) are our bugs to prevent.
+- **Harder:** D1 is built for rows of text, not large photos. Full-size phone photos may need resizing in the browser or a separate file store, which would require revising this ADR (see Giancarlo's Prediction Stake in EVALS.md).
+- Data sits in a Cloudflare region we do not choose, under terms we do not negotiate.
 
 ### Revisit Trigger
 
-Revisit if creating this becomes a real possibility for an actual client. 
+Revisit by 2026-10-29 if photo uploads fail the test in Giancarlo's Prediction Stake, or if the RAT fails in user interviews by 2026-10-22.
 
 ## Architecture Diagram
 
 ```mermaid
 flowchart LR
-    Person["Person using the app"] --> UI["index.html"]
-    UI --> CSS["styles.css"]
-    UI --> App["app.js (IIFE)"]
-    App --> Browser["Browser-native storage, if approved by FEATURES.md"]
-    App -. "No external API or network call in the first slice" .-> Boundary["Outside the prototype"]
+    Member["Trip member's phone or laptop"] --> Page["Static page: index.html, styles.css, app.js"]
+    Page -- "HTTPS: account, trip, and moment requests (the crossing)" --> Worker["Cloudflare Worker: API"]
+    Worker -- "prepare().bind() SQL" --> D1[("Cloudflare D1: accounts, trips, members, moments")]
 ```
