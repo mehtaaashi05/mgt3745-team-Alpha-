@@ -70,7 +70,17 @@ Each member commits their own stake, in their own commit, before any Phase 2 cod
 
 ### Aashi Mehta, Implementer — committed <date>
 
-*To be written and committed by Aashi.*
+**Tight:** F4 will not be tested properly because we will only have a few dummy accounts created to test the features. In order to test the feature, we need to multiple accounts who are all part of various trips. 
+
+*Result:*
+
+**Loose:** F3 will be used a lot during Phase 2, because we will be conducting tests to see that our features work properly and know how to deal with errors. 
+
+*Result:*
+
+**Open:** Likes and comments are allow when trips are shared publicly, but if the creator doesn’t want to share them publicly, can the trip participants still comment?
+
+*Result:*
 
 ### Giancarlo Martinez-Saldana, Architect — committed <date>
 
