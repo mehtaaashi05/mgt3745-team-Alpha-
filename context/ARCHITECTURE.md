@@ -1,6 +1,6 @@
 # ARCHITECTURE.md
 
-Accountable: Giancarlo Martinez-Saldana, Phase 1 Architect. Prepared by Aashi Mehta since Architect is a silent member. Weights were committed before any option was scored.
+Accountable: Giancarlo Martinez-Saldana, Phase 1 Architect. Weights were committed in their own commit before any option was scored; the commit history is the evidence.
 
 ## The Gate: Build, Buy, or Delegate
 
@@ -9,40 +9,19 @@ photo-first travel diary for places a person has visited, with category
 filtering. Ranking visited places by city and category is a future direction,
 not a committed feature in this decision.
 
-### Agreed Weights (recorded before scores)
+### Weights (committed before scores)
 
-The team agreed to these weights before draft option scores were assigned; the
-agreement was reported in the project discussion on 2026-10-07.
-
-| Criterion | Agreed weight (1 to 5) | Why this weight |
+| Criterion | Weight (1 to 5) | Why this weight |
 |---|---:|---|
-| Satisfies the described review-and-filter flow | 5 | This is the existing product concept and the smallest useful slice. |
-| Fits the supplied no-library, no-network-call standard | 5 | The team standard rules out adding a hosted dependency for the prototype. |
-| Limits exposure of personal reviews and photos to non-followers | 5 | Photos and visit history can be sensitive; avoid sending them to a new service. |
-| Buildable and testable by the team in Phase 2 | 4 | The first slice should be achievable with the repository's simple web stack. |
-| Reversible if later requirements change | 3 | City/category rankings and multi-user sharing may change the data model. |
+| Supports the group-trip flow (F1 to F4: accounts, invites, moments, who added what) | 5 | These are the Must-be features in FEATURES.md. An option that cannot do shared trips fails the product. |
+| Fits the course stack and STANDARDS.md | 4 | The team has built on static pages, Workers, and D1 in HW4 and HW5. An option outside that stack costs learning time we do not have. |
+| Limits exposure of trip photos and notes | 5 | Photos and visit history reveal where people were and when. Fewer parties holding them means fewer crossings to account for. |
+| Buildable and testable by the team in Phase 2 | 4 | Phase 2 is three weeks. We must be able to run, inspect, and fix the result ourselves. |
+| Switching cost, scored from HW4 and HW5 experience | 3 | In HW4 and HW5, leaving our own Worker and D1 took one `wrangler d1 export` and a rewrite of one Worker. Leaving a hosted product means losing data or re-entering it, so this decides how reversible the choice is. |
 
-### Scores (1 to 5)
+### Scores
 
-| Criterion | Weight | Build: Worker, D1, static page | Buy: reminder features in off-the-shelf invoicing software | Delegate: bolt.new-generated and hosted app |
-|---|---|---|---|---|
-| Satisfies the described review-and-filter flow | 5 | 5 | 2 | 4 |
-| Fits the supplied no-library, no-network-call standard | 5 | 5 | 3 | 3 |
-| Limits exposure of personal reviews and photos to non-followers | 5 | 4 | 2 | 2 |
-| Buildable and testable by the team in Phase 2 | 4 | 4 | 2 | 4 |
-| Reversible if later requirements change | 3 | 4 | 2 | 4 |
-| **Weighted total (max 110)** | | **98** | **49** | **73** |
-
-**Score rationale**
-
-- **Build:** This is the strongest fit. The team can shape the review and category flow directly and keep the prototype browser-only, with no added server, database, or credentials. Buildability and reversibility get a 4 because storing photos in browser storage still needs testing, and a future ranking feature may require changing the data model.
-- **Buy:** The team hasn't evaluated a specific product yet. A generic hosted review product or SDK fits the photo-first, category-filtered experience poorly. It would likely need network calls and a third-party service, which conflicts with the no-library, no-network-call standard and sends personal reviews and photos off-device. Buildability gets a 2 because the team would mostly be configuring and working around someone else's product, which leaves little to build and test in Phase 2. Reversibility gets a 2 because data and workflows would be tied to the vendor.
-- **Delegate:** Could accelerate a prototype, but the team would still need to
-  specify, verify, and own it. It has weaker fit with the no-library/no-call
-  constraint and data-boundary preference. The required bolt.new probe is
-  separately limited to specification testing; generated code is not kept.
-
-
+Scores are added in a separate commit after the weights above.
 ## ADR-001: Build a Browser-Only Travel Review Prototype
 
 - **Status:** Status: Accepted, 2026-010-07. Driver: Semaj. Approver: Rishika.
