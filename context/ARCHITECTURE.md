@@ -1,6 +1,6 @@
 # ARCHITECTURE.md
 
-Accountable: Giancarlo Martinez-Saldana, Phase 1 Architect. Weights were committed in their own commit before any option was scored; the commit history is the evidence.
+Accountable: Aashi Mehta, Phase 2 Architect. Weights were committed in their own commit before any option was scored; the commit history is the evidence.
 
 ## The Gate: Build, Buy, or Delegate
 
@@ -72,11 +72,48 @@ Build option 1. Structure lives in `index.html`, presentation in `styles.css`, a
 
 Revisit by 2026-10-29 if photo uploads fail the test in Giancarlo's Prediction Stake, or if the RAT fails in user interviews by 2026-10-22.
 
+
+## D1 Schema
+
+The initial schema supports the four Must-be features in FEATURES.md.
+
+### Tables and Relationships
+
+- `accounts`: One row per registered user. Email and username are unique without regard to capitalization. Passwords are stored as hashes.
+- `trips`: One row per trip, with a creator and a reusable invitation token hash.
+- `members`: Join table connecting accounts to trips. The composite primary key `(trip_id, account_id)` prevents duplicate membership.
+- `moments`: Photos, notes, and places added to trips. Each moment records its author and creation timestamp. A database CHECK constraint requires at least one nonempty content field.
+
+### Integrity and Authorization
+
+- A trip creator must also be inserted into `members`.
+- An invitation must be validated before a person can join a trip.
+- A moment's `(trip_id, author_id)` must reference an existing membership.
+- The Worker must verify membership before returning private trip data.
+- The Worker must refuse deletion of another member's moment, as required by F4-2.
+- All application SQL uses `prepare().bind()` as required by STANDARDS.md.
+
+### Photo Storage
+
+The proposed `photo_data_url` field stores a resized image encoded as a data URL. This remains conditional on a successful D1 storage test. Full-size photo storage has not been validated. A separate file-storage service requires a superseding ADR before adoption.
+
+
 ## Architecture Diagram
 
-```mermaid
+ ```mermaid
 flowchart LR
-    Member["Trip member's phone or laptop"] --> Page["Static page: index.html, styles.css, app.js"]
-    Page -- "HTTPS: account, trip, and moment requests (the crossing)" --> Worker["Cloudflare Worker: API"]
-    Worker -- "prepare().bind() SQL" --> D1[("Cloudflare D1: accounts, trips, members, moments")]
-```
+    User["Trip member's browser"]
+    Pages["Static pages<br/>index.html, styles.css, app.js"]
+    Worker["Cloudflare Worker<br/>API and authorization"]
+
+    Accounts[("D1: accounts")]
+    Trips[("D1: trips")]
+    Members[("D1: members")]
+    Moments[("D1: moments")]
+
+    User --> Pages
+    Pages -->|"HTTPS requests"| Worker
+    Worker -->|"prepare().bind()"| Accounts
+    Worker -->|"prepare().bind()"| Trips
+    Worker -->|"prepare().bind()"| Members
+    Worker -->|"prepare().bind()"| Moments
