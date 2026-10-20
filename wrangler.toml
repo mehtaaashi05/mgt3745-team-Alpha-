@@ -1,0 +1,14 @@
+# Alpha travel app: one Worker serves the API and the static pages (ADR-001).
+name = "alpha-trips"
+main = "src/worker.js"
+compatibility_date = "2026-10-01"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+# The database_id is an identifier, not a credential (STANDARDS.md).
+[[d1_databases]]
+binding = "DB"
+database_name = "alpha-db"
+database_id = "e5a03e46-6c07-4b54-b4a7-66b4c303b193"
