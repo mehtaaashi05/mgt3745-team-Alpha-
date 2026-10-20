@@ -43,8 +43,8 @@ R = Responsible (does the work), A = Accountable (answers for it; exactly one pe
 | Member | Phase 1 | Phase 2 | Final |
 |---|---|---|---|
 | Semaj Johnson II | Reviewer | Specifier | Architect |
-| Aashi Mehta | Implementer | Reviewer | Specifier |
-| Rishika Sikhakolli | Specifier | Architect | Implementer |
+| Aashi Mehta | Implementer | Architect | Specifier |
+| Rishika Sikhakolli | Specifier | Reviwer | Implementer |
 | Giancarlo | Architect | Implementer | Reviewer |
 
 Nobody holds the same role twice, and every role is filled in every phase.
