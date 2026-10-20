@@ -1,6 +1,6 @@
 # ARCHITECTURE.md
 
-Accountable: Giancarlo Martinez-Saldana, Phase 1 Architect. Weights were committed in their own commit before any option was scored; the commit history is the evidence.
+Accountable: Aashi Mehta, Phase 2 Architect. Weights were committed in their own commit before any option was scored; the commit history is the evidence.
 
 ## The Gate: Build, Buy, or Delegate
 
@@ -72,11 +72,83 @@ Build option 1. Structure lives in `index.html`, presentation in `styles.css`, a
 
 Revisit by 2026-10-29 if photo uploads fail the test in Giancarlo's Prediction Stake, or if the RAT fails in user interviews by 2026-10-22.
 
-## Architecture Diagram
+## D1 Schema
 
+The initial schema supports the four Must-be features in FEATURES.md.
+
+### Tables and Relationships
+
+### Tables and Relationships
+
+- `accounts`: One row per registered user. Email and username are unique without regard to capitalization. Passwords are stored as hashes.
+- `trips`: One row per trip, with a creator and a reusable invitation token hash.
+- `members`: Join table connecting accounts to trips. The composite primary key `(trip_id, account_id)` prevents duplicate membership.
+- `moments`: Photos, notes, and places added to trips. Each moment records its author and creation timestamp. A database CHECK constraint requires at least one nonempty content field.
+
+```sql
+CREATE TABLE accounts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL,
+    username TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE trips (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    creator_id INTEGER NOT NULL,
+    invite_token_hash TEXT UNIQUE NOT NULL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (creator_id) REFERENCES accounts(id)
+);
+
+CREATE TABLE members (
+    trip_id INTEGER NOT NULL,
+    account_id INTEGER NOT NULL,
+    joined_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (trip_id, account_id),
+    FOREIGN KEY (trip_id) REFERENCES trips(id),
+    FOREIGN KEY (account_id) REFERENCES accounts(id)
+);
+
+CREATE TABLE moments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    trip_id INTEGER NOT NULL,
+    author_id INTEGER NOT NULL,
+    photo_data_url TEXT,
+    note TEXT,
+    place TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (trip_id) REFERENCES trips(id),
+    FOREIGN KEY (author_id) REFERENCES accounts(id),
+    CHECK (photo_data_url IS NOT NULL OR note IS NOT NULL OR place IS NOT NULL)
+);
+```
+
+### Integrity and Authorization
+
+- A trip creator must also be inserted into `members`.
+- An invitation must be validated before a person can join a trip.
+- A moment's `(trip_id, author_id)` must reference an existing membership.
+- The Worker must verify membership before returning private trip data.
+- The Worker must refuse deletion of another member's moment, as required by F4-2.
+- All application SQL uses `prepare().bind()` as required by STANDARDS.md.
+
+### Photo Storage
+
+The proposed `photo_data_url` field stores a resized image encoded as a data URL. This remains conditional on a successful D1 storage test. Full-size photo storage has not been validated. A separate file-storage service requires a superseding ADR before adoption.
+
+
+## Architecture Diagram
 ```mermaid
 flowchart LR
-    Member["Trip member's phone or laptop"] --> Page["Static page: index.html, styles.css, app.js"]
-    Page -- "HTTPS: account, trip, and moment requests (the crossing)" --> Worker["Cloudflare Worker: API"]
-    Worker -- "prepare().bind() SQL" --> D1[("Cloudflare D1: accounts, trips, members, moments")]
+    User["Trip member's browser"]
+    Pages["Static pages<br/>index.html, styles.css, app.js"]
+    Worker["Cloudflare Worker<br/>API and authorization"]
+    D1[("Cloudflare D1 Database<br/>(accounts, trips, members, moments)")]
+
+    User --> Pages
+    Pages -->|"HTTPS requests"| Worker
+    Worker -->|"prepare().bind()"| D1
 ```
