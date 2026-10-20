@@ -6,13 +6,13 @@
 # (for example @jdoe) and removes the leading "# " from each rule line,
 # on a branch, through a pull request, AFTER every roster PR has merged.
 #
-  *                       @semajjohnson @mehtaaashi05
-/context/PROJECT.md       @rishikasikhakolli @semajjohnson
-/context/USERS.md         @rishikasikhakolli @semajjohnson
-/context/FEATURES.md      @rishikasikhakolli @semajjohnson
-/context/ARCHITECTURE.md  @GiancarloMartinez-Saldana @semajjohnson
-/context/EVALS.md         @semajjohnson @rishikasikhakolli
-/context/CLAUDE.md        @mehtaaashi05 @GiancarloMartinez-Saldana
-/context/STANDARDS.md     @mehtaaashi05 @GiancarloMartinez-Saldana
-/context/TOOLS.md         @mehtaaashi05 @GiancarloMartinez-Saldana
-/docs/                    @semajjohnson @mehtaaashi05
+  *                       @rishikasikhakolli @GiancarloMartinez-Saldana
+/context/PROJECT.md       @semajjohnson @rishikasikhakolli
+/context/USERS.md         @semajjohnson @rishikasikhakolli
+/context/FEATURES.md      @semajjohnson @rishikasikhakolli
+/context/ARCHITECTURE.md  @mehtaaashi05 @rishikasikhakolli
+/context/EVALS.md         @rishikasikhakolli @semajjohnson
+/context/CLAUDE.md        @GiancarloMartinez-Saldana @mehtaaashi05
+/context/STANDARDS.md     @GiancarloMartinez-Saldana @mehtaaashi05
+/context/TOOLS.md         @GiancarloMartinez-Saldana @mehtaaashi05
+/docs/                    @rishikasikhakolli @GiancarloMartinez-Saldana
