@@ -1,6 +1,6 @@
 # EVALS.md
 
-Status: ACTIVE. Accountable: Semaj Johnson II, Phase 1 Reviewer.
+Status: ACTIVE. Accountable: Reviewer. Phase 1: Semaj. Phase 2: Rishika
 
 ## Opportunity Solution Tree
 
@@ -38,6 +38,29 @@ flowchart TD
 
 **How we would test it cheaply:** ask the three interviewees for their last trip, and have them open their camera roll and their group chat and show us what they posted and when. Past behavior, not intention — the HW2 rule.
 
+## RAT Test
+
+### RAT Results — run 2026-10-20 by Rishika Sikhakolli (Reviewer/Evaluator)
+
+**Assumption tested:** people will add moments *during* a trip, not after it.
+**Method:** three interviews about each person's most recent trip, with their camera roll and group chat open. Past behavior only.
+
+| Question | Person 1 | Person 2 | Person 3 |
+|---|---|---|---|
+| Who (role only, no names) | full-time employee | intern | student |
+| Trip (where, how long, group size) | New York, one month, 2 people | Taiwan, 2 days, 3 people | San Francisco, 5 days, 6 people |
+| When were photos taken? | During | During | During |
+| When were things posted to the group chat? | During | During | After |
+| When were notes, captions, or reviews written? | During | After | After |
+| What was posted most? | Photos + text | Photos | Photos |
+| Did they look for something from the trip later? | Yes, found it | Yes, found it | No |
+| How did they search? | Searched a word | Asked someone | Didn't |
+| One observation or short quote | Sent a photo with text to the chat and later found it by searching for a word | Enjoyed when people sent things in the group chat to reminisce on an old event | Wanted stuff in shared album, likes accessibility of everything together |
+
+**Summary:** 3 of 3 took photos during the trip. 2 of 3 posted to the group chat during the trip. Only 1 of 3 wrote notes or captions during the trip; the other 2 wrote them after.
+
+**Result:** Mixed. Everyone captured photos in the moment, but most wrote text only afterward. This supports the RAT for photos but not for notes, which backs keeping the note optional (F3-1) and makes searching by place, date, or member more important than searching by a word from the note (F5-1).
+
 ## Evals Planned for Phase 2
 
 | What | Grader | Checks |
@@ -62,6 +85,8 @@ Each member commits their own stake, in their own commit, before any Phase 2 cod
 
 **How we will check:** Watch three people open a multi-member test trip without instruction and note what they say first.
 
+***Result (2026-10-21):** Correct. 3 of 7 moments in the test trip carried all three of photo, note, and place, below the half his prediction named. The sample is one trip with 4 accounts, so the margin is thin.*
+
 ### Rishika Sikhakolli, Specifier — committed <2026-10-08>
 
 **Prediction:** People might have things they want to add to the trip feeds that don't have all three criteria (photo, review, location name). F3-1 makes the note optional, members will mostly post a photo and a place, so searching by a word from the note (F5-1) will find fewer moments than searching by place, date, or member.
@@ -72,20 +97,21 @@ Each member commits their own stake, in their own commit, before any Phase 2 cod
 
 **Why:** Profile 1 shares quickly and has little patience for writing, and the probe showed that requiring all three fields was a guess, so F3-1 now lets people skip the note. Profile 2 wants to say more than a caption, which is why I am not more confident. If this is right, F5 should treat place, date, and member as the main ways to search.
 
+***Result (2026-10-21):** Wrong. 7 of 7 moments in the test trip included a note, the opposite of the prediction: people skipped the photo or place, not the note. Searching by a word from the note (F5-1) would have found every moment.*
+
 ### Aashi Mehta, Implementer — committed <date>
 
 **Tight:** F4 will not be tested properly because we will only have a few dummy accounts created to test the features. In order to test the feature, we need to multiple accounts who are all part of various trips. 
 
-*Result:*
+***Result (2026-10-21):** F4 was tested with 4 real accounts in one shared trip, and all three F4 judgment questions (Q8–Q10) passed with both graders, including deleting someone else's moment, which was refused.*
 
 **Loose:** F3 will be used a lot during Phase 2, because we will be conducting tests to see that our features work properly and know how to deal with errors. 
 
-*Result:*
+***Result (2026-10-21):** F3 was the most-used feature in testing: 7 moments were added to the test trip, but that is a small sample from one trip.*
 
 **Open:** Likes and comments are allow when trips are shared publicly, but if the creator doesn’t want to share them publicly, can the trip participants still comment?
 
-*Result:*
-
+***Result (2026-10-21):** Not answerable in Phase 2. Likes and comments (F8) were not built, so whether trip members can comment on an unshared trip is still open. A tester did in fact voice a desire for comment/like ability.*
 
 ### Giancarlo (Architect), committed 2026-10-08
 
@@ -96,4 +122,9 @@ Each member commits their own stake, in their own commit, before any Phase 2 cod
 **Confidence:** 70%
 
 **Why:** D1 is built for rows of text and numbers, not large files, and phone photos are often several megabytes. ADR-001 names only Workers and D1, so if this is right, ADR-001 will need a revision in Phase 2.
+
+***Result (2026-10-21):** Correct. 3 of 3 phone photos saved and displayed on Workers and D1 with no added storage service, but only because the build shrinks every photo in the browser before upload (`shrinkPhoto` in `public/app.js`, capped at 700,000 characters by the Worker).*
+
 ## Where the Stakes Disagree
+*Nothing was inputted during Phase 1 for where the stakes disagree. I (Rishika), Phase 2 Reviewer, went through and deliberated the prediction stakes at the beginning of Phase 2 to fill this out.*
+Semaj and Rishika agree most moments will be partial, but disagree on which field is dropped. A test trip full of photo-and-note moments would prove Semaj right and Rishika wrong. Giancarlo predicts full-size phone photos will fail on Workers and D1 alone which would mean photos are rarer for technical reasons and not choice. Aashi’s Tight stake predicts too few test accounts to exercise F4. In this case, the moments counted for Semaj’s and Rishika’s stakes will come from teammates testing features.
