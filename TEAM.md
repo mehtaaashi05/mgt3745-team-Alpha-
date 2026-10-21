@@ -13,16 +13,16 @@
 
 | Name | Role | GitHub | Contact hours (ET) |
 |---|---|---|---|
-| Semaj Johnson II | Reviewer | @semajjohnson | 9am–7pm |
-| Aashi Mehta | Implementer | @mehtaaashi05 | 9am–7pm |
-| Rishika Sikhakolli | Specifier | @rishikasikhakolli | 9am–8pm |
-| Giancarlo | Architect | @GiancarloMartinez-Saldana | 9am–7pm |
+| Semaj Johnson II | Specifier | @semajjohnson | 9am–7pm |
+| Aashi Mehta | Architect | @mehtaaashi05 | 9am–7pm |
+| Rishika Sikhakolli | Reviewer | @rishikasikhakolli | 9am–8pm |
+| Giancarlo | Implementer | @GiancarloMartinez-Saldana | 9am–7pm |
 
 ## RACI Matrix (Phase 1)
 
 R = Responsible (does the work), A = Accountable (answers for it; exactly one person, always a person), C = Consulted (asked before), I = Informed (told after). AI tools may be R or C and are never A. Every row where AI is R names the human A beside it.
 
-| Artifact | Specifier (Rishika) | Architect (Giancarlo) | Implementer (Aashi) | Reviewer (Semaj) | AI tools |
+| Artifact | Specifier (Semaj) | Architect (Aashi) | Implementer (Giancarlo) | Reviewer (Rishika) | AI tools |
 |---|---|---|---|---|---|
 | TEAM.md | R | R | R, A | R | – |
 | docs/DACI-001.md | R | R | R | R, A | – |
@@ -32,7 +32,7 @@ R = Responsible (does the work), A = Accountable (answers for it; exactly one pe
 | context/ARCHITECTURE.md | C | R, A | C | C | C |
 | context/STANDARDS.md, TOOLS.md, CLAUDE.md | I | C | R, A | C | C |
 | .github/CODEOWNERS and branch protection | I | I | R, A | C | – |
-| docs/PROBE-001.md and docs/DDR-001.md | A | I | R (DDR) | C | R (probe; A is Rishika) |
+| docs/PROBE-001.md and docs/DDR-001.md | A | I | R (DDR) | C | R |
 | context/EVALS.md (OST, RAT) | C | C | I | R, A | – |
 | context/EVALS.md (Prediction Stakes) | R | R | R | R, A | – |
 | Pull request reviews | R | R | R | R, A | – |
@@ -44,7 +44,7 @@ R = Responsible (does the work), A = Accountable (answers for it; exactly one pe
 |---|---|---|---|
 | Semaj Johnson II | Reviewer | Specifier | Architect |
 | Aashi Mehta | Implementer | Architect | Specifier |
-| Rishika Sikhakolli | Specifier | Reviwer | Implementer |
+| Rishika Sikhakolli | Specifier | Reviewer | Implementer |
 | Giancarlo | Architect | Implementer | Reviewer |
 
 Nobody holds the same role twice, and every role is filled in every phase.
@@ -55,3 +55,4 @@ Nobody holds the same role twice, and every role is filled in every phase.
 |---|---|---|
 | 2026-10-07 | Session 1: Team formed and roles assigned — Rishika Specifier, Giancarlo Architect, Aashi Implementer, Semaj Reviewer, rotating after Phase 1 so nobody repeats. Agreed which member's HW1 problem to build, to be recorded formally in DACI-001 with weights committed before scores and a dated reopen trigger. Working agreement drafted: meetings Tuesdays and Thursdays after class plus Wednesdays at 5:00 PM ET, 12-hour weekday and 24-hour weekend response time, quiet-member escalation at 48, 72, and 96 hours, and disagreements about the product becoming a DACI driven by the file's Accountable owner. | Semaj |
 | 2026-10-07 | Session 2: Aashi created `mgt3745-team-Alpha` from the group template and invited everyone; roster PRs opened as each member's first PR. Semaj's PR (#4) merged after correcting a deleted table separator row. Rishika's (#3) conflicts with TEAM.md after #4 merged and was reviewed with resolution instructions. Aashi's (#5) is clean but lists her role as "Architect and Implementer," which applies only to teams of three; correction requested. Several PR descriptions are missing the team format and the required AI Use line, raised in review. Branch protection and CODEOWNERS to be enabled only after the last roster PR merges, two owners per path, bypass disabled. Remaining before the Oct 8 deadline: DACI-001 closed, role artifacts opened as PRs, one Prediction Stake per member, the bolt.new probe with PROBE-001.md and DDR-001, and the README. | Semaj |
+| 2026-10-20 | Session 3: | 2026-10-20 | Session 3: Each member walked through their Phase 2 role and the artifacts it owes by Oct 22. TEAM.md updated with the Phase 2 roster and RACI matrix. CODEOWNERS updated to match the new owners. Ground rules set for commits so pull requests stay readable: one artifact or feature per pull request, no direct commits to main, every description ends with the AI Use line. | Rishika |
