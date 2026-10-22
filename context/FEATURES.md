@@ -1,6 +1,6 @@
 # FEATURES.md
 
-Accountable: Rishika, Specifier. Consulted: Semaj, Reviewer.
+Accountable: Semaj Johnson II, Phase 2 Specifier (Rishika Sikhakolli in Phase 1). Consulted: Rishika Sikhakolli, Phase 2 Reviewer.
 
 Every feature traces to a profile in USERS.md and to the outcome in PROJECT.md. Rows marked (probe) were added or revised after docs/PROBE-001.md.
 
@@ -35,11 +35,13 @@ F2-3. The app shall give each trip one reusable invite link. (probe)
 
 ### F3 Add a moment to a trip (Must-be) - 1,2
 
-F3-1. WHEN a member submits a moment with at least one of a photo, note, or place, the app shall add it to the trip, labeled with the member's name. (probe)
+F3-1. WHEN a signed-in member submits a moment with at least one of a photo, note, or place, the app shall add it to the trip, labeled with that member's account name (F1). (probe) (HW6)
 
-F3-2. IF a review fails to save, THEN the app shall tell the member and keep the photo, note, and location on screen so they can try again.
+F3-2. IF a moment fails to save, THEN the app shall tell the member and keep the photo, note, and place on screen so they can try again. (HW6)
 
-F3-3. IF a member submits a moment with no photo, note, or place, THEN the app shall refuse and add nothing. (probe)
+F3-3. IF a member submits a moment with no photo, and no note or place other than spaces, THEN the app shall refuse and add nothing. (probe) (HW6)
+
+X7. F3 has no name field of its own and no sample members, trips, or moments; the member's name comes from their account (F1).
 
 ### F4 Trip view with who added what (Must-be) - 1
 
