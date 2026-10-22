@@ -7,7 +7,7 @@
 - **Response time.** Within 12 hours on weekdays, within 24 hours on weekends. If you will be out of reach for longer than that, say so in the thread before you go.
 - **Quiet member clause.** At 48 hours with no response, any member messages them directly and the Implementer reassigns nothing yet. At 72 hours, the team names a stand-in for the missing artifact in the Meeting Log, and the original owner keeps authorship if they return before the deadline. At 96 hours, the Reviewer emails the instructor with this clause and the dates, and the team proceeds without that member's artifact rather than waiting.
 - **Disagreement.** Anyone can call a disagreement. If it is about what the product should do, it becomes a DACI and the Driver is whoever is Accountable for the affected file. The Approver is drawn by lot unless the team agrees on one. Dissent is recorded in one sentence in the DACI rather than argued twice.
-- **Dates.** Weights committed Oct 7. Scores and DACI-001 closed Oct 7. Role artifacts open as pull requests Oct 7. Prediction Stakes and the bolt probe Oct 7. Reviews finished and README written Oct 8. Submitted by 11:59 PM ET Oct 8.
+- **Dates.** Weights committed Oct 7. Scores and DACI-001 closed Oct 7. Role artifacts open as pull requests Oct 7. Prediction Stakes and the bolt probe Oct 7. Reviews finished and README written Oct 8. Submitted by 11:59 PM ET Oct 8. Phase 2: roles rotated Oct 9. Three real users confirmed by Oct 15, the DACI-001 reopen trigger date. RAT test run Oct 20. Build, code evals, and stake resolutions through reviewed pull requests. Submitted by 11:59 PM ET Oct 22. Phase 1 dates are in the Meeting Log.
 
 ## Roster
 
@@ -18,11 +18,34 @@
 | Rishika Sikhakolli | Reviewer | @rishikasikhakolli | 9am–8pm |
 | Giancarlo | Implementer | @GiancarloMartinez-Saldana | 9am–7pm |
 
-## RACI Matrix (Phase 1)
+## RACI Matrix (Phase 2)
 
 R = Responsible (does the work), A = Accountable (answers for it; exactly one person, always a person), C = Consulted (asked before), I = Informed (told after). AI tools may be R or C and are never A. Every row where AI is R names the human A beside it.
 
 | Artifact | Specifier (Semaj) | Architect (Aashi) | Implementer (Giancarlo) | Reviewer (Rishika) | AI tools |
+|---|---|---|---|---|---|
+| TEAM.md | R | R | R | R, A | – |
+| context/FEATURES.md | R, A | C | C | C | – |
+| docs/VALIDATION.md | R, A | I | I | C | – |
+| context/ARCHITECTURE.md: ADR, D1 schema, diagram | C | R, A | C | C | C |
+| db/schema.sql and db/seed.sql | I | C | R, A | C | C (A: Giancarlo) |
+| src/worker.js and public/ pages | C | C | R, A | C | R (A: Giancarlo) |
+| context/STYLE.md and SKILLS.md | C | C | R, A | C | C |
+| context/TOOLS.md, Cloudflare row and owner | I | C | R, A | C | – |
+| docs/DDR-003 and later | I | C | R, A | C | – |
+| evals/ code evals | C | C | C | R, A | C (A: Rishika) |
+| context/EVALS.md: RAT test and stake resolutions | R | R | R | R, A | C (A: Rishika) |
+| docs/JUDGEMENT.md | C | C | C | R, A | R (A: Rishika) |
+| Pull request reviews | R | R | R | R, A | – |
+| README.md | C | C | R, A | C | – |
+
+Every member writes their own Prediction Stake; the Reviewer is Accountable for the file they live in. The deployed Cloudflare account moved to the Phase 2 Implementer, recorded with its date in TOOLS.md.
+
+### RACI Matrix (Phase 1, for history)
+
+Kept so the rotation is visible rather than overwritten.
+
+| Artifact | Specifier (Rishika) | Architect (Giancarlo) | Implementer (Aashi) | Reviewer (Semaj) | AI tools |
 |---|---|---|---|---|---|
 | TEAM.md | R | R | R, A | R | – |
 | docs/DACI-001.md | R | R | R | R, A | – |
