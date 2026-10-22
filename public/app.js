@@ -346,7 +346,7 @@
     if (moment.author_id === viewerId) {
       const deleteButton = document.createElement('button');
       deleteButton.type = 'button';
-      deleteButton.className = 'link-button';
+      deleteButton.className = 'secondary-button';
       deleteButton.textContent = 'Delete my moment';
       deleteButton.addEventListener('click', function () {
         deleteMoment(moment.id);

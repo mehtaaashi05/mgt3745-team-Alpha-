@@ -1,13 +1,23 @@
+/* Every value comes from a token in context/STYLE.md; rules below use the names, never raw values. */
 :root {
-  --color-background: #f6f4ef;
-  --color-surface: #ffffff;
-  --color-text: #1f2328;
-  --color-muted: #5b6168;
-  --color-accent: #1f6f5c;
-  --color-accent-hover: #185746;
-  --color-border: #dcd8cf;
-  --color-error: #a3261b;
-  --radius: 10px;
+  --color-primary: #123552;
+  --color-on-primary: #FFFFFF;
+  --color-text: #172B40;
+  --color-muted: #46586B;
+  --color-background: #F7F9FB;
+  --color-surface: #FFFFFF;
+  --color-focus: #B16D00;
+  --color-error: #922020;
+  --color-success: #1D4D2B;
+  --color-border: #526578;
+  --color-divider: #B8C5D0;
+  --font-body: Arial, Helvetica, sans-serif;
+  --font-heading: Georgia, 'Times New Roman', serif;
+  --font-size-min: 16px;
+  --space-unit: 8px;
+  --radius: 4px;
+  --target-min: 44px;
+  --measure-max: 44rem;
 }
 
 * { box-sizing: border-box; }
@@ -17,96 +27,106 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--font-body);
+  font-size: var(--font-size-min);
   background: var(--color-background);
   color: var(--color-text);
   line-height: 1.5;
 }
 
 .site-header {
-  padding: 16px;
+  padding: calc(var(--space-unit) * 2);
   background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-divider);
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 16px;
+  align-items: center;
+  gap: var(--space-unit) calc(var(--space-unit) * 2);
 }
 
 .brand {
+  font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 1.4rem;
-  color: var(--color-accent);
+  font-size: 1.5rem;
+  color: var(--color-primary);
   text-decoration: none;
 }
 
 .tagline { margin: 0; color: var(--color-muted); flex: 1 1 240px; }
 
-.session-bar { display: flex; gap: 12px; align-items: baseline; }
+.session-bar { display: flex; gap: calc(var(--space-unit) * 1.5); align-items: center; }
 
-main { max-width: 680px; margin: 0 auto; padding: 16px; }
+main {
+  max-width: var(--measure-max);
+  margin: 0 auto;
+  padding: calc(var(--space-unit) * 2);
+}
 
 .card {
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-divider);
   border-radius: var(--radius);
-  padding: 16px 20px;
-  margin-bottom: 16px;
+  padding: calc(var(--space-unit) * 2) calc(var(--space-unit) * 3);
+  margin-bottom: calc(var(--space-unit) * 2);
 }
 
-h1, h2 { margin-top: 0; }
-h1 { font-size: 1.4rem; }
-h2 { font-size: 1.15rem; }
+h1, h2 { margin-top: 0; font-family: var(--font-heading); color: var(--color-primary); }
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.25rem; }
 
-label { display: block; font-weight: 600; margin: 12px 0 4px; }
+label { display: block; font-weight: 700; margin: calc(var(--space-unit) * 1.5) 0 calc(var(--space-unit) / 2); }
 
 input[type="text"],
 input[type="email"],
 input[type="password"],
 textarea {
   width: 100%;
-  padding: 10px;
+  min-height: var(--target-min);
+  padding: var(--space-unit);
   font: inherit;
+  color: var(--color-text);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 6px;
+  border-radius: var(--radius);
 }
 
 input:focus, textarea:focus, button:focus, a:focus {
-  outline: 3px solid var(--color-accent);
+  outline: 3px solid var(--color-focus);
   outline-offset: 2px;
 }
 
 button {
-  margin-top: 14px;
-  padding: 10px 18px;
+  min-height: var(--target-min);
+  margin-top: calc(var(--space-unit) * 2);
+  padding: var(--space-unit) calc(var(--space-unit) * 2);
   font: inherit;
-  font-weight: 600;
-  color: #ffffff;
-  background: var(--color-accent);
-  border: none;
-  border-radius: 6px;
+  font-weight: 700;
+  color: var(--color-on-primary);
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius);
   cursor: pointer;
 }
 
-button:hover { background: var(--color-accent-hover); }
+button:hover { text-decoration: underline; }
 button:disabled { opacity: 0.6; cursor: wait; }
 
-.link-button {
-  margin: 0;
-  padding: 0;
-  background: none;
-  color: var(--color-accent);
-  text-decoration: underline;
+/* Delete and Sign out are as large and as readable as Save (STYLE.md refusal 2), only less loud. */
+.secondary-button {
+  color: var(--color-primary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
 }
 
-.link-button:hover { background: none; color: var(--color-accent-hover); }
+.session-bar .secondary-button { margin-top: 0; }
 
 .status-message {
-  max-width: 680px;
-  margin: 12px auto 0;
-  padding: 0 16px;
+  max-width: var(--measure-max);
+  margin: calc(var(--space-unit) * 1.5) auto 0;
+  padding: 0 calc(var(--space-unit) * 2);
   min-height: 1.5em;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--color-success);
 }
 
 .status-message.is-error { color: var(--color-error); }
@@ -115,33 +135,37 @@ button:disabled { opacity: 0.6; cursor: wait; }
 
 .trip-list, .moment-list { list-style: none; padding: 0; margin: 0; }
 
-.trip-list li { padding: 10px 0; border-bottom: 1px solid var(--color-border); }
+.trip-list li {
+  padding: calc(var(--space-unit) * 1.5) 0;
+  border-bottom: 1px solid var(--color-divider);
+}
+
 .trip-list li:last-child { border-bottom: none; }
 
 .moment-list li {
-  padding: 14px 0;
-  border-bottom: 1px solid var(--color-border);
+  padding: calc(var(--space-unit) * 2) 0;
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .moment-list li:last-child { border-bottom: none; }
 
 .moment-author { font-weight: 700; }
-.moment-time { color: var(--color-muted); font-size: 0.9rem; }
-.moment-place { color: var(--color-accent); font-weight: 600; margin: 4px 0; }
-.moment-note { margin: 4px 0; white-space: pre-wrap; }
+.moment-time { color: var(--color-muted); }
+.moment-place { color: var(--color-primary); font-weight: 700; margin: calc(var(--space-unit) / 2) 0; }
+.moment-note { margin: calc(var(--space-unit) / 2) 0; white-space: pre-wrap; }
 
 .moment-photo, .photo-preview {
   display: block;
   max-width: 100%;
-  border-radius: 8px;
-  margin: 8px 0;
+  border-radius: var(--radius);
+  margin: var(--space-unit) 0;
 }
 
 .photo-preview { max-height: 200px; }
 
 .invite-panel {
-  margin-top: 16px;
-  padding: 12px;
-  border: 1px dashed var(--color-accent);
-  border-radius: 8px;
+  margin-top: calc(var(--space-unit) * 2);
+  padding: calc(var(--space-unit) * 1.5);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius);
 }
