@@ -1,6 +1,6 @@
 # FEATURES.md
 
-Accountable: Rishika, Specifier. Consulted: Semaj, Reviewer.
+Accountable: Semaj Johnson II, Phase 2 Specifier (Rishika Sikhakolli in Phase 1). Consulted: Rishika Sikhakolli, Phase 2 Reviewer.
 
 Every feature traces to a profile in USERS.md and to the outcome in PROJECT.md. Rows marked (probe) were added or revised after docs/PROBE-001.md.
 
