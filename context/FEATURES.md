@@ -27,11 +27,15 @@ F1-2. IF a person signs up with a username that is already taken, THEN the app s
 
 ### F2 Create a trip and invite members (Must-be) - 1
 
+F2 depends on F1. A person is signed in when F1-1 has created their account and established their session. (HW6)
+
 F2-1. WHEN a signed-in person creates a trip with a name, the app shall make them its creator and give them an invite link.
 
-F2-2. IF someone tries to join a trip without a valid invite link, THEN the app shall refuse and show no trip details. 
+F2-2. IF a person who is not a member of a trip requests it without a valid invite link, THEN the app shall show no trip name, creator, note, member count, moments, or invite link. (HW6)
 
 F2-3. The app shall give each trip one reusable invite link. (probe)
+
+F2-4. The app shall generate each invite link from random characters that do not encode the trip name, any member's name, or the trip's creation date. (HW6)
 
 ### F3 Add a moment to a trip (Must-be) - 1,2
 
