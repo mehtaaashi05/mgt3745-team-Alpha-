@@ -25,7 +25,7 @@ Working agreement, RACI matrix, and rotation plan: [TEAM.md](TEAM.md).
 
 **Run it locally:** `npm install`, then `npm run db:local`, then `npm run dev`, and open http://localhost:8787.
 
-**Run the code evals:** `npm test`
+**Run the code evals:** `API=https://alpha-trips.mgt3745-hw4-giancarlo.workers.dev npm test` (4 of 4 pass as of 2026-10-21; see [evals/worker.test.js](evals/worker.test.js))
 
 ## Status
 
@@ -37,13 +37,14 @@ Deployed 2026-10-20 on Cloudflare Workers and D1, as ADR-001 decided, from Gianc
 
 | Feature | EARS rows | Manual check ([DDR-003](docs/DDR-003.md)) | Code eval (`npm test`) |
 |---|---|---|---|
-| F1 Accounts | F1-1, F1-2 | Pass | Pending |
-| F2 Create a trip and invite members | F2-1, F2-2, F2-3 | Pass | Pending |
-| F3 Add a moment to a trip | F3-1, F3-2, F3-3 | Pass | Pending |
-| F4 Trip view with who added what | F4-1, F4-2 | Pass | Pending |
+| F1 Accounts | F1-1, F1-2 | Pass | Pass (F1-2) |
+| F2 Create a trip and invite members | F2-1, F2-2, F2-3 | Pass | Pass (F2-2) |
+| F3 Add a moment to a trip | F3-1, F3-2, F3-3 | Pass | Pass (F3-3) |
+| F4 Trip view with who added what | F4-1, F4-2 | Pass | Pass (F4-2) |
 
-Performance and Attractive features (F5 to F8) are not built yet.
+*The other EARS rows are checked by people in the judgment eval ([docs/JUDGMENT.md](docs/JUDGMENT.md)): 10 of 10 passed with two graders, 100% agreement.
 
+Performance and Attractive features (F5 to F8) are not built yet.*
 
 ## Links, in Reading Order
 
@@ -59,8 +60,10 @@ Performance and Attractive features (F5 to F8) are not built yet.
 10. [docs/DDR-001.md](docs/DDR-001.md): the probe delegation
 11. [docs/DDR-002.md](docs/DDR-002.md): Copilot drafting the merged STANDARDS.md
 12. [docs/DDR-003.md](docs/DDR-003.md): Claude drafting the Phase 2 Worker, D1 schema, seed data, and pages
-13. Code: [src/worker.js](src/worker.js) (API), [public/](public/) (pages), [db/schema.sql](db/schema.sql) and [db/seed.sql](db/seed.sql) (D1), [wrangler.toml](wrangler.toml) (deployment)
-14. Previews: [STYLE.md](context/STYLE.md), [SKILLS.md](context/SKILLS.md), [AGENTS.md](context/AGENTS.md)
+13. [docs/DDR-004.md](docs/DDR-004.md): The evals and reviews.
+14. Verification: [evals/worker.test.js](evals/worker.test.js) (code evals) and [docs/JUDGMENT.md](docs/JUDGMENT.md) (judgment eval)
+15. Code: [src/worker.js](src/worker.js) (API), [public/](public/) (pages), [db/schema.sql](db/schema.sql) and [db/seed.sql](db/seed.sql) (D1), [wrangler.toml](wrangler.toml) (deployment)
+16. Previews: [STYLE.md](context/STYLE.md), [SKILLS.md](context/SKILLS.md), [AGENTS.md](context/AGENTS.md)
 
 ## AI Use
 
