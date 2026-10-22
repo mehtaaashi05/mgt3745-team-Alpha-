@@ -21,7 +21,7 @@ Working agreement, RACI matrix, and rotation plan: [TEAM.md](TEAM.md).
 
 **Try it with a demo account** (synthetic data only): sign in as `bea_s` with password `alpha-demo-pass`, then open [Lisbon spring break](https://alpha-trips.mgt3745-hw4-giancarlo.workers.dev/#/trip/1) to see moments from three members in the order they were added.
 
-<!-- Screenshot or GIF of the deployed build goes here: docs/img/see-it-work.png -->
+![The Lisbon spring break trip on the live app, signed in as the demo account bea_s: the trip's three members, and the Add a moment form refusing an empty moment with "Add a photo, a note, or a place." (F3-3)](docs/img/see-it-work.png)
 
 **Run it locally:** `npm install`, then `npm run db:local`, then `npm run dev`, and open http://localhost:8787.
 
