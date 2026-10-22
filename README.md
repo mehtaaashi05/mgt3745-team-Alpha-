@@ -64,7 +64,9 @@ Performance and Attractive features (F5 to F8) are not built yet.
 13. [docs/DDR-004.md](docs/DDR-004.md): Claude drafting the Phase 2 evals, eval results, and reviews
 14. [docs/VALIDATION.md](docs/VALIDATION.md) and [docs/DDR-005.md](docs/DDR-005.md): real-user sessions, and Claude drafting that record
 15. Code: [src/worker.js](src/worker.js) (API), [public/](public/) (pages), [db/schema.sql](db/schema.sql) and [db/seed.sql](db/seed.sql) (D1), [wrangler.toml](wrangler.toml) (deployment)
-16. Previews: [STYLE.md](context/STYLE.md), [SKILLS.md](context/SKILLS.md), [AGENTS.md](context/AGENTS.md)
+16. Verification: [evals/worker.test.js](evals/worker.test.js) (code evals) and [docs/JUDGEMENT.md](docs/JUDGEMENT.md) (judgment eval, 10 of 10 passed with two graders)
+17. Team style and skills, merged from all four members' HW5 versions: [STYLE.md](context/STYLE.md), [SKILLS.md](context/SKILLS.md)
+18. Preview: [AGENTS.md](context/AGENTS.md)
 
 ## AI Use
 
