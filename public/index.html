@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alpha: Group Trip Record</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#/trips">Alpha</a>
+    <p class="tagline">One record of the trip, built by everyone on it.</p>
+    <div class="session-bar" id="session-bar" hidden>
+      <span>Signed in as <strong id="session-username"></strong></span>
+      <button type="button" id="logout-button" class="link-button">Sign out</button>
+    </div>
+  </header>
+
+  <!-- Announced so screen-reader users hear every success and error (STANDARDS.md). -->
+  <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
+
+  <main>
+    <!-- F1: sign up and sign in -->
+    <section id="auth-view" class="view" hidden>
+      <div class="card">
+        <h1>Create your account</h1>
+        <form id="signup-form" novalidate>
+          <label for="signup-email">Email</label>
+          <input id="signup-email" name="email" type="email" autocomplete="email" required>
+          <label for="signup-username">Username</label>
+          <input id="signup-username" name="username" type="text" autocomplete="username" minlength="3" maxlength="30" required>
+          <label for="signup-password">Password (8 or more characters)</label>
+          <input id="signup-password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+          <button type="submit">Sign up</button>
+        </form>
+      </div>
+      <div class="card">
+        <h2>Already have an account?</h2>
+        <form id="login-form" novalidate>
+          <label for="login-username">Username</label>
+          <input id="login-username" name="username" type="text" autocomplete="username" required>
+          <label for="login-password">Password</label>
+          <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+          <button type="submit">Sign in</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- F2: my trips, create a trip, join by link -->
+    <section id="trips-view" class="view" hidden>
+      <div class="card">
+        <h1>Your trips</h1>
+        <ul id="trip-list" class="trip-list"></ul>
+        <p id="trip-list-empty" class="muted" hidden>No trips yet. Start one below, or open an invite link from a friend.</p>
+      </div>
+      <div class="card">
+        <h2>Start a trip</h2>
+        <form id="create-trip-form" novalidate>
+          <label for="trip-name">Trip name</label>
+          <input id="trip-name" name="name" type="text" maxlength="100" required>
+          <button type="submit">Create trip</button>
+        </form>
+        <div id="invite-panel" class="invite-panel" hidden>
+          <p><strong>Invite link for <span id="invite-trip-name"></span></strong></p>
+          <p class="muted">Copy it now: for privacy we only keep a scrambled version, so this link is shown once.</p>
+          <label for="invite-url">Invite link</label>
+          <input id="invite-url" type="text" readonly>
+          <button type="button" id="copy-invite-button">Copy link</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- F3 and F4: one trip, its moments, and who added each -->
+    <section id="trip-view" class="view" hidden>
+      <p><a href="#/trips">&larr; All trips</a></p>
+      <div class="card">
+        <h1 id="trip-title"></h1>
+        <p class="muted">Members: <span id="trip-members"></span></p>
+      </div>
+      <div class="card">
+        <h2>Add a moment</h2>
+        <p class="muted">Any one of photo, note, or place is enough.</p>
+        <form id="moment-form" novalidate>
+          <label for="moment-photo">Photo</label>
+          <input id="moment-photo" name="photo" type="file" accept="image/*">
+          <img id="moment-photo-preview" class="photo-preview" alt="Selected photo preview" hidden>
+          <label for="moment-note">Note</label>
+          <textarea id="moment-note" name="note" rows="3" maxlength="2000"></textarea>
+          <label for="moment-place">Place</label>
+          <input id="moment-place" name="place" type="text" maxlength="200">
+          <button type="submit" id="moment-submit">Add moment</button>
+        </form>
+      </div>
+      <div class="card">
+        <h2>Moments</h2>
+        <ol id="moment-list" class="moment-list"></ol>
+        <p id="moment-list-empty" class="muted" hidden>Nothing added yet. Be the first.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
