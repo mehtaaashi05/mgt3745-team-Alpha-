@@ -13,10 +13,10 @@
 
 | Name | Role | GitHub | Contact hours (ET) |
 |---|---|---|---|
-| Semaj Johnson II | Specifier | @semajjohnson | 9am–7pm |
-| Aashi Mehta | Architect | @mehtaaashi05 | 9am–7pm |
-| Rishika Sikhakolli | Reviewer | @rishikasikhakolli | 9am–8pm |
-| Giancarlo | Implementer | @GiancarloMartinez-Saldana | 9am–7pm |
+| Semaj Johnson II | Architect | @semajjohnson | 9am–7pm |
+| Aashi Mehta | Specifier | @mehtaaashi05 | 9am–7pm |
+| Rishika Sikhakolli | Implementer | @rishikasikhakolli | 9am–8pm |
+| Giancarlo | Reviewer | @GiancarloMartinez-Saldana | 9am–7pm |
 
 ## RACI Matrix (Phase 2)
 
