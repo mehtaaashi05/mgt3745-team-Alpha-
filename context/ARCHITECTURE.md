@@ -120,11 +120,11 @@ Option 3 was rejected on the RAT: photos are the one thing people reliably captu
 - **Photos are permanently degraded on upload and the original is never stored.** The app is not a backup of anyone's camera roll, and nothing in the product says so. A member who wants the full-resolution photo keeps it themselves.
 - 1280 pixels looks right on a phone and visibly soft on a laptop at full width. **Nobody measured whether members mind.** The validation sessions did not ask, so this is an untested consequence of a tested decision.
 - **Two ceilings in two files have to be kept in step.** If a later change raises the browser's 650,000 above the Worker's 700,000, members will start meeting 413s the browser promised would not happen. Both constants are named above so the pair is findable from this document.
-- **F7 (video moments) does not fit this design at all.** Video would need the file store this ADR declined, and would supersede it rather than refine it.
+- **Video or audio moments would not fit this design at all.** Nothing in FEATURES.md proposes them, so this is a boundary rather than a blocked feature. If a feature ever does, it needs the file store this ADR declined and would supersede this ADR rather than refine it.
 
 ### Revisit Trigger
 
-Revisit if any one of: F7 is scheduled; a member reports 1280 pixels as too soft; or notes and places grow large enough that a 700,000-character photo plus text approaches D1's 2,000,000-byte row limit.
+Revisit if any one of: a feature proposing video or audio moments is scheduled; a member reports 1280 pixels as too soft; or notes and places grow large enough that a 700,000-character photo plus text approaches D1's 2,000,000-byte row limit.
 
 ## ADR History
 
@@ -288,7 +288,7 @@ The Phase 3 question for this document is not whether the architecture is defens
 
 The RAT named two signals: the interviews, and "moments whose timestamps cluster after a trip's end date rather than during it." That second signal could not be read at all. `trips` stores a name, a creator, an invite hash, and `created_at` — it has no trip start or end date, so the deployed database cannot say whether a moment landed during a trip or three weeks later. The RAT had to be settled on interviews alone.
 
-This is a schema decision quietly constraining a measurement, and it is worth naming because nobody chose it on purpose. If the team had wanted the build to help answer its own riskiest assumption, `trips` needed two date columns in Phase 1. The schema's consequences section flagged the gap; this is what the gap cost.
+This is a schema decision quietly constraining a measurement, and it is worth naming because nobody chose it on purpose. The RAT was written in Phase 1 and the schema in Phase 2, so whoever designed trips already had the RAT’s build signal in front of them, and the two date columns still did not get added. Neither artifact is wrong on its own — the gap opened in the handoff between them, which is a cost of rotating roles that no single phase’s review would have caught. The schema’s consequences section flagged the gap honestly; this is what the gap cost.
 
 ### What the RAT points at, and the schema cannot do yet
 
