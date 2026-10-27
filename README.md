@@ -2,7 +2,7 @@
 
 ## What
 
-A shared trip record: everyone on a group trip adds photos, notes, and places as they happen, so the group can find what happened, where, and who added it long after the trip ends.
+A shared trip record for groups who travel together. Everyone on the trip adds photos, notes, and locations/places as they occur or after, so the group can find what happened, where, and who added it long after the trip ends.
 
 ## Team
 
@@ -17,23 +17,23 @@ Working agreement, RACI matrix, and rotation plan: [TEAM.md](TEAM.md).
 
 ## See It Work
 
-**Live app:** https://alpha-trips.mgt3745-hw4-giancarlo.workers.dev
+**Live app:** [https://alpha-trips.travlr.workers.dev](https://alpha-trips.travlr.workers.dev)
 
-**Try it with a demo account** (synthetic data only): sign in as `bea_s` with password `alpha-demo-pass`, then open [Lisbon spring break](https://alpha-trips.mgt3745-hw4-giancarlo.workers.dev/#/trip/1) to see moments from three members in the order they were added.
+**Try it with a demo account** (synthetic data only): sign in as `bea_s` with password `alpha-demo-pass`, then open [Lisbon spring break](https://alpha-trips.travlr.workers.dev/#/trip/1) to see moments from three members in the order they were added.
 
 ![The Lisbon spring break trip on the live app, signed in as the demo account bea_s: the trip's three members, and the Add a moment form refusing an empty moment with "Add a photo, a note, or a place." (F3-3)](docs/img/see-it-work.png)
 
 **Run it locally:** `npm install`, then `npm run db:local`, then `npm run dev`, and open http://localhost:8787.
 
-**Run the code evals** against the live app: `API=https://alpha-trips.mgt3745-hw4-giancarlo.workers.dev npm test` (or point `API` at http://localhost:8787 while `npm run dev` is running).
+**Run the code evals** against the live app: `API=https://alpha-trips.travlr.workers.dev npm test` (or point `API` at http://localhost:8787 while `npm run dev` is running).
 
 ## Status
 
 Phase 1 decided four things: which problem to build (DACI-001), what to build (FEATURES.md), where it runs (ADR-001), and what would prove it works (EVALS.md). Phase 2 builds F1 (Accounts), F2 (Creating a trip and inviting members), F3 (Add a moment to a trip), and F4 (Trip view with who added what) first, because the riskiest assumption lives in these.
 
-### Phase 2 Build Status
+### Build Status
 
-Deployed 2026-10-20 on Cloudflare Workers and D1, as ADR-001 decided, from Giancarlo's Cloudflare account (TOOLS.md).
+Deployed 2026-10-26 on Cloudflare Workers and D1, as ADR-001 decided, from Rishika's Cloudflare account (TOOLS.md). Phase 2 was deployed from Giancarlo's account on 2026-10-20.
 
 | Feature | EARS rows | Manual check ([DDR-003](docs/DDR-003.md)) | Code eval ([evals/worker.test.js](evals/worker.test.js)) |
 |---|---|---|---|
@@ -42,13 +42,11 @@ Deployed 2026-10-20 on Cloudflare Workers and D1, as ADR-001 decided, from Gianc
 | F3 Add a moment to a trip | F3-1, F3-2, F3-3 | Pass | F3-3: Pass |
 | F4 Trip view with who added what | F4-1, F4-2 | Pass | F4-2: Pass |
 
-All four code evals passed against the deployed Worker on 2026-10-21 (EVALS.md lists one code eval per Must-be row with a server-side effect; the other rows are covered by the judgment eval and the manual checks). User validation sessions are in [VALIDATION.md](docs/VALIDATION.md).
+All four code evals passed against the deployed Worker on 2026-10-21, and again against Rishika's Phase 3 deployment on 2026-10-27. User validation sessions are in [VALIDATION.md](docs/VALIDATION.md).
 
-Performance and Attractive features (F5 to F8) are not built yet.
-
+**What is incomplete:** the Performance and Attractive features (F5 search, F6 sharing, F7 following, F8 likes and comments) were not built. Invite links are shown only once, when a trip is created, because only a hash is stored. F3-2's failed-save path was checked by hand (DDR-003) but has no automated code eval.
 
 ## Links, in Reading Order
-
 1. [TEAM.md](TEAM.md): who owns what
 2. [docs/DACI-001.md](docs/DACI-001.md): why this problem
 3. [context/PROJECT.md](context/PROJECT.md): the problem, reframed
@@ -62,14 +60,21 @@ Performance and Attractive features (F5 to F8) are not built yet.
 11. [docs/DDR-002.md](docs/DDR-002.md): Copilot drafting the merged STANDARDS.md
 12. [docs/DDR-003.md](docs/DDR-003.md): Claude drafting the Phase 2 Worker, D1 schema, seed data, and pages
 13. [docs/DDR-004.md](docs/DDR-004.md): Claude drafting the Phase 2 evals, eval results, and reviews
-14. [docs/VALIDATION.md](docs/VALIDATION.md) and [docs/DDR-005.md](docs/DDR-005.md): real-user sessions, and Claude drafting that record
-15. Code: [src/worker.js](src/worker.js) (API), [public/](public/) (pages), [db/schema.sql](db/schema.sql) and [db/seed.sql](db/seed.sql) (D1), [wrangler.toml](wrangler.toml) (deployment)
-16. Verification: [evals/worker.test.js](evals/worker.test.js) (code evals) and [docs/JUDGEMENT.md](docs/JUDGEMENT.md) (judgment eval, 10 of 10 passed with two graders)
-17. Team style and skills, merged from all four members' HW5 versions: [STYLE.md](context/STYLE.md), [SKILLS.md](context/SKILLS.md)
-18. Preview: [AGENTS.md](context/AGENTS.md)
+14. [docs/DDR-005.md](docs/DDR-005.md): Claude drafting the Phase 2 validation
+15. [docs/VALIDATION.md](docs/VALIDATION.md) and [docs/DDR-005.md](docs/DDR-005.md): real-user sessions, and Claude drafting that record
+16. Code: [src/worker.js](src/worker.js) (API), [public/](public/) (pages), [db/schema.sql](db/schema.sql) and [db/seed.sql](db/seed.sql) (D1), [wrangler.toml](wrangler.toml) (deployment)
+17. Verification: [evals/worker.test.js](evals/worker.test.js) (code evals) and [docs/JUDGEMENT.md](docs/JUDGEMENT.md) (judgment eval, 10 of 10 passed with two graders)
+18. Team style and skills, merged from all four members' HW5 versions: [STYLE.md](context/STYLE.md), [SKILLS.md](context/SKILLS.md)
+19. Preview: [AGENTS.md](context/AGENTS.md)
+20. [docs/DEPLOY.md](docs/DEPLOY.md): how to deploy the Worker and D1 from a clean checkout
+21. [docs/RETRO.md](docs/RETRO.md): RAT verdict, evals against plan, stakes, delegation, what we would build differently, spec findings
+22. [docs/DDR-LOG.md](docs/DDR-LOG.md): every AI delegation across all three phases
+23. Individual retrospectives: [Aashi](docs/retro/aashi.md), [Giancarlo](docs/retro/giancarlo.md), [Rishika](docs/retro/rishika.md), [Semaj](docs/retro/semaj.md)
 
 ## AI Use
 
-In Phase 1, AI tools were Responsible for one task (the bolt.new specification probe, DDR-001) and Consulted on 4 (drafting and critiquing of PROJECT.md, FEATURES.md, ARCHITECTURE.md, README.md, STANDARDS.md, TOOLS.md, and CLAUDE.md). No AI output was committed without a named reviewer. Nothing bolt.new generated is in this repository.
+In Phase 1, AI tools were Responsible for one task (the bolt.new specification probe, DDR-001) and Consulted on 7 (drafting and critiquing of PROJECT.md, FEATURES.md, ARCHITECTURE.md, README.md, STANDARDS.md, TOOLS.md, and CLAUDE.md). No AI output was committed without a named reviewer. Nothing bolt.new generated is in this repository.
 
 In Phase 2, Claude was Responsible for drafting the Worker, D1 schema, seed data, and pages ([DDR-003](docs/DDR-003.md)); Giancarlo is Accountable and verified every Must-be EARS row before committing. Claude also drafted the evals, eval results, and reviews ([DDR-004](docs/DDR-004.md), Rishika Accountable) and VALIDATION.md ([DDR-005](docs/DDR-005.md), Semaj Accountable). Copilot's drafting of STANDARDS.md is recorded in [DDR-002](docs/DDR-002.md).
+
+In Phase 3, 
