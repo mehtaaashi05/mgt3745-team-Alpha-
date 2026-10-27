@@ -1,8 +1,7 @@
 # FEATURES.md
 
-Accountable: Semaj Johnson II, Phase 2 Specifier (Rishika Sikhakolli in Phase 1). Consulted: Rishika Sikhakolli, Phase 2 Reviewer.
-
-Every feature traces to a profile in USERS.md and to the outcome in PROJECT.md. Rows marked (probe) were added or revised after docs/PROBE-001.md.
+Accountable: Aashi Mehta, Phase 3 Specifier (Semaj Johnson II in Phase 2, Rishika Sikhakolli in Phase 1). Consulted: Giancarlo, Phase 3 Reviewer.
+Every feature traces to a profile in USERS.md and to the outcome in PROJECT.md. Rows marked (probe) were added or revised after docs/PROBE-001.md. This is the final state at the end of Phase 3; what changed and why is recorded in docs/RETRO.md, Spec findings.
 
 ## Kano Classification
 
@@ -16,6 +15,23 @@ Every feature traces to a profile in USERS.md and to the outcome in PROJECT.md. 
 | F6 | Share a finished trip to the main feed | Attractive | The group trip works fully without sharing, so its absence isn't missed. Groups that want to show off a trip get something extra. (Profile 2) |
 | F7 | Follow people and see their shared trips | Attractive | The app is useful to a group without following. For users who want to discover trips from people they trust, it adds a new reason to come back. (Profile 3) |
 | F8 | Likes and comments on shared trips | Attractive | On trips shared publicly, they make sharing feel two-way. (Profile 1, Profile 2) |
+
+Build Status at End of Phase 3
+
+Every Must-be feature (F1 to F4) is built and deployed. The Performance and Attractive features were not built.
+
+| ID |	Status	| Evidence |
+|---|---|---|
+| F1 | Built | Code eval F1-2 (duplicate username); judgment eval Q1 and Q2, both graders Yes |
+| F2 | Built | Code eval F2-2 (join without a valid invite); judgment eval Q3 and Q4, both graders Yes |
+| F3 | Built | Code eval F3-3 (empty moment refused); judgment eval Q5 to Q7, both graders Yes |
+| F4 | Built | Code eval F4-2 (delete refused); judgment eval Q8 to Q10, both graders Yes |
+| F5 | Not built | Search was not built in Phase 2; the search check in EVALS.md was not run |
+| F6 | Not built | No eval covers it |
+| F7 | Not built | No eval covers it |
+| F8 | Not built | Recorded in the EVALS.md stake resolutions |
+
+Code evals: 4 of 4 passed. Judgment eval: 10 of 10 Yes from both graders (docs/JUDGEMENT.md). EARS rows not named above were not individually tested.
 
 ## EARS Acceptance Criteria
 
