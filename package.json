@@ -1,6 +1,7 @@
 {
   "name": "alpha-trips",
   "private": true,
+    "type": "module",
   "scripts": {
     "dev": "wrangler dev",
     "db:local": "wrangler d1 execute alpha-db --local --file=db/schema.sql && wrangler d1 execute alpha-db --local --file=db/seed.sql",

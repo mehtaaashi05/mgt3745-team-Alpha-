@@ -1,6 +1,6 @@
 // Code evals from context/EVALS.md, run against the deployed Worker.
 // EARS rows tested: F1-2, F2-2, F3-3, F4-2 (each Must-be row with a server-side effect).
-// Run: API=https://alpha-trips.mgt3745-hw4-giancarlo.workers.dev npm test
+// Run: API=https://alpha-trips.travlr.workers.dev npm test
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
