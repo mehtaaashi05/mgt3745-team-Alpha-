@@ -13,7 +13,8 @@ Every delegation decision record in this repository, in order, with the hours ea
 | [DDR-005](DDR-005.md) | 2 | 2026-10-22 | Claude | Drafting VALIDATION.md from the RAT results | Semaj | 1.5 h | 0.7 h | 0.8 h |
 | [DDR-006](DDR-006.md) | 3 | 2026-10-27 | Claude | ARCHITECTURE.md final (ADR-002, ADR history, diagram), DEPLOY.md, and an individual retrospective | Semaj | 4.0 h | 1.3 h | 2.7 h |
 | [DDR-007](DDR-007.md) | 3 | 2026-10-27 | Claude (Cowork) | Context pruning review, EVALS.md final status and error log, three RETRO.md sections, this log, an individual retrospective | Giancarlo | 5.0 h | 1.5 h | 3.5 h |
-| **Total** | | | | | | **30.0 h** | **10.0 h** | **20.0 h** |
+| [DDR-008](DDR-008.md) | 3 | 2026-10-26 | Claude | Redeploy steps and PR #108 changes, README edits, Phase 3 RACI rows, an individual retrospective draft, the recording script, PR descriptions and reviews | Rishika | 5.0 h | 2.0 h | 3.0 h |
+| **Total** | | | | | | **35.0 h** | **12.0 h** | **23.0 h** |
 
 "By hand" and "Actual" are each DDR's own estimates; DDR-003's "8 to 10 hours" is counted as 9; DDR-006's "about four hours" and "roughly 80 minutes" are counted as 4.0 and 1.3 (its own text rounds the saving to about 2.5). Phase 3 recording and integration DDRs, if any, are added by their owners.
 
