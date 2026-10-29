@@ -6,20 +6,20 @@ Everything here was checked against the files on `main` on 2026-10-27. Where a s
 
 ## What Gets Deployed
 
-One thing. `wrangler deploy` uploads a single Cloudflare Worker named `alpha-trips` that serves both the static pages and the API, bound to one D1 database named `alpha-db` (ADR-001). There is no file store, no second Worker, no build step, and no bundler — `public/` is uploaded as-is through the `ASSETS` binding.
+One thing. `wrangler deploy` uploads a single Cloudflare Worker named `alpha-trips` that serves both the static pages and the API, bound to one D1 database named `alpha-db` (ADR-001). There is no file store, no second Worker, no build step, and no bundler. `public/` is uploaded as-is through the `ASSETS` binding.
 
 | Piece | Where it lives | Binding |
 |---|---|---|
-| API and authorization | `src/worker.js` | — |
+| API and authorization | `src/worker.js` | none |
 | Pages | `public/index.html`, `styles.css`, `app.js` | `ASSETS` |
 | Database | `db/schema.sql`, `db/seed.sql` | `DB` → `alpha-db` |
-| Deploy config | `wrangler.toml` | — |
+| Deploy config | `wrangler.toml` | none |
 
 ## Prerequisites
 
 | Requirement | Version | Why this version |
 |---|---|---|
-| Node.js | **22.7 or newer** | `evals/worker.test.js` uses `import` in a `.js` file and `package.json` has no `"type": "module"`. Node runs it only because automatic module-syntax detection is on by default from 22.7. On Node 20, `npm test` fails with `SyntaxError: Cannot use import statement outside a module` before any eval runs. Verified on Node 22.22.0: the runner finds all four tests. |
+| Node.js | **22 or newer** | Set by the dependency, not by our code: `wrangler@^4.151.3` declares `engines: { "node": ">=22.0.0" }`, so nothing here deploys on an older Node. This file first recorded 22.7 for a different reason, which no longer applies. `evals/worker.test.js` uses `import` in a `.js` file, and before #108 `package.json` had no `"type": "module"`, so the evals ran only where automatic module-syntax detection is on by default, from 22.7. #108 added the field, which removes that constraint. The floor stands anyway because wrangler sets it higher. |
 | wrangler | `^4.151.3` | Pinned in `package.json` as a devDependency. `npm install` is enough; do not install it globally, because a global wrangler can be a different major version than the config was written against. |
 | A Cloudflare account | Free plan | Workers and D1 both fit the free plan at this size. |
 
@@ -43,7 +43,7 @@ npm install
 npx wrangler login
 ```
 
-This opens a browser and stores an OAuth token on *your* machine. On a headless machine or a Codespace it prints a URL to open instead, and the callback can take a minute to come back — that is normal, not a hang.
+This opens a browser and stores an OAuth token on *your* machine. On a headless machine or a Codespace it prints a URL to open instead, and the callback can take a minute to come back. That is normal, not a hang.
 
 **3. Create your own D1 database, and put its id in `wrangler.toml`.** This is the step that stops a clean checkout from working, and the reason is worth understanding rather than copying past.
 
@@ -51,7 +51,7 @@ This opens a browser and stores an OAuth token on *your* machine. On a headless 
 npx wrangler d1 create alpha-db
 ```
 
-`wrangler.toml` currently carries `database_id = "e5a03e46-6c07-4b54-b4a7-66b4c303b193"`. That id belongs to the database in the account that deployed last. It is an identifier and not a credential (STANDARDS.md), so it is committed on purpose — but **no other account can use it.** Deploying without replacing it either fails to find the database or silently binds to nothing. Paste the id the command above prints into the `[[d1_databases]]` block, and commit it in the same pull request that moves the deployment, so the file always describes the account that is actually serving.
+`wrangler.toml` currently carries `database_id = "2dc1093a-b345-4b24-a4a2-c4eec2be4efc"`, the database on Rishika's account, which deployed last on 2026-10-26. That id belongs to that account. It is an identifier and not a credential (STANDARDS.md), so it is committed on purpose, but **no other account can use it.** Deploying without replacing it either fails to find the database or silently binds to nothing. Paste the id the command above prints into the `[[d1_databases]]` block, and commit it in the same pull request that moves the deployment, so the file always describes the account that is actually serving.
 
 **4. Create the schema and seed it.**
 
@@ -61,7 +61,7 @@ npm run db:remote
 
 This runs `db/schema.sql` and then `db/seed.sql` against the live database.
 
-> **This erases everything.** `db/schema.sql` opens with `DROP TABLE IF EXISTS` on all five tables, and `db/seed.sql` opens with `DELETE FROM` on all five. Run it to set a database up. Do not run it against a database that holds anything anyone wants to keep — including tester data from a validation session. For local work, `npm run db:local` does the same thing against a local SQLite file and touches nothing remote.
+> **This erases everything.** `db/schema.sql` opens with `DROP TABLE IF EXISTS` on all five tables, and `db/seed.sql` opens with `DELETE FROM` on all five. Run it to set a database up. Do not run it against a database that holds anything anyone wants to keep, including tester data from a validation session. For local work, `npm run db:local` does the same thing against a local SQLite file and touches nothing remote.
 
 **5. Deploy.**
 
@@ -69,7 +69,7 @@ This runs `db/schema.sql` and then `db/seed.sql` against the live database.
 npm run deploy
 ```
 
-Wrangler prints the live URL on success. It is `https://alpha-trips.<your-subdomain>.workers.dev`, which means **the URL changes when the account changes** — so README.md, the code-eval command in README.md, and the Cloudflare rows in TOOLS.md all have to move with it.
+Wrangler prints the live URL on success. It is `https://alpha-trips.<your-subdomain>.workers.dev`, which means **the URL changes when the account changes**, so README.md, the code-eval command in README.md, and the Cloudflare rows in TOOLS.md all have to move with it.
 
 **6. Register a workers.dev subdomain, if the deploy asks.** On an account that has never deployed a Worker, the first `wrangler deploy` can succeed while the URL returns a 404 or "not found" until a workers.dev subdomain is registered for the account in the Cloudflare dashboard. A fresh Cloudflare account also has to have its email verified before any deploy is allowed; wrangler reports that as error code 10034 rather than in plain words.
 
@@ -95,7 +95,7 @@ The one real credential in the system is **the wrangler OAuth token on the deplo
 
 ## Model Configuration
 
-**The project calls no model.** There is no AI Gateway, no Workers AI binding, no model proxy, and no outbound request of any kind from `src/worker.js` — its only `fetch` calls are its own handler and `env.ASSETS.fetch(request)`, which is internal to the Worker. Nothing to configure, and nothing to rotate.
+**The project calls no model.** There is no AI Gateway, no Workers AI binding, no model proxy, and no outbound request of any kind from `src/worker.js`. Its only `fetch` calls are its own handler and `env.ASSETS.fetch(request)`, which is internal to the Worker. Nothing to configure, and nothing to rotate.
 
 AI tools were used to *build* this project, which is a separate thing and is recorded in `context/TOOLS.md` and the DDRs in `docs/`. No model runs at request time.
 
@@ -111,22 +111,24 @@ Run these in order. Each one fails differently, which is the point.
 API=https://alpha-trips.<your-subdomain>.workers.dev npm test
 ```
 
-Expect four passing tests, one each for F1-2, F2-2, F3-3, and F4-2. These sign up throwaway accounts against the live database, so they leave rows behind by design — they use a timestamp to keep usernames unique so the suite can be run again. `fetch failed` on every test means `API` is wrong or unset, not that the Worker is broken.
+Expect four passing tests, one each for F1-2, F2-2, F3-3, and F4-2. These sign up throwaway accounts against the live database, so they leave rows behind by design: they use a timestamp to keep usernames unique so the suite can be run again. `fetch failed` on every test means `API` is wrong or unset, not that the Worker is broken.
 
 4. **A photo round-trips.** Add a moment with a photo taken on a phone. ADR-002 is the only reason this works; if it fails, that ADR's revisit trigger is what to read.
 
 ## Moving the Deployment to Another Member's Account
 
-This is the Final-rotation handoff, and it is steps 3 through 6 plus bookkeeping. Budget twenty minutes, most of it waiting on `wrangler login`.
+**This has already been done once, and the procedure below is the record of it rather than a plan.** The deployment moved from Giancarlo's Cloudflare account to Rishika's on 2026-10-26, and the repository caught up when #108 merged on 2026-10-29. Every item was completed and verified on `main`; this is what a future move would repeat.
 
-1. The new owner runs steps 1 through 6 under their own account.
-2. Replace `database_id` in `wrangler.toml` with theirs.
-3. Update the live URL everywhere it appears: the See It Work section of README.md, the code-eval command in README.md, and the header comment in `evals/worker.test.js`.
-4. Update the Cloudflare and wrangler rows in `context/TOOLS.md` — accountable member and the date it moved, as both earlier handoffs did.
-5. Add a line to "What Is Still Open" in `context/ARCHITECTURE.md` recording the move, and delete the open item saying it has not happened.
-6. Re-run the verification above against the new URL before closing the pull request.
+| Step | Done in the 2026-10-26 move |
+|---|---|
+| New owner runs steps 1 through 6 under their own account | Yes. Rishika ran `wrangler login`, `wrangler d1 create alpha-db`, `npm run db:remote`, `npm run deploy` |
+| Replace `database_id` in `wrangler.toml` | Yes, `2dc1093a-b345-4b24-a4a2-c4eec2be4efc` |
+| Update the live URL everywhere it appears: README.md See It Work, the code-eval command, the `evals/worker.test.js` header | Yes, all three now point at `alpha-trips.travlr.workers.dev` |
+| Update the Cloudflare and wrangler rows in `context/TOOLS.md` with the accountable member and the date | Yes, Rishika accountable from 2026-10-26, previous owners kept in the row |
+| Record the move in `context/ARCHITECTURE.md` | Yes, under "Resolved in Phase 3" |
+| Re-run the verification above against the new URL | Yes, four code evals pass; the demo account and the seeded trip were confirmed by hand |
 
-The old deployment keeps running until its owner deletes the Worker. Two live copies backed by two databases is a confusing thing to hand a grader, so decide which URL is canonical in the pull request rather than afterward.
+Two things a future move should know, both learned from this one. The repository changes belong in the **same pull request** as the deploy, because the README pointed at the new URL for a day while `wrangler.toml` still named the old database, and a clean checkout in that window would have deployed against the wrong account. And the old deployment keeps serving until its owner deletes the Worker, so decide in the pull request which URL is canonical rather than afterward.
 
 ## What This File Does Not Cover
 
