@@ -1,6 +1,6 @@
 # EVALS.md
 
-Status: ACTIVE. Accountable: Reviewer. Phase 1: Semaj. Phase 2: Rishika
+Status: ACTIVE. Accountable: Reviewer. Phase 1: Semaj. Phase 2: Rishika. Phase 3 (Final Reviewer and Evaluator): Giancarlo
 
 ## Opportunity Solution Tree
 
@@ -66,7 +66,7 @@ flowchart TD
 | What | Grader | Checks |
 |---|---|---|
 | Code eval, `evals/` run with `npm test` | Code | One test per Must-be EARS row with a server-side effect: F1-2 duplicate username, F2-2 join without a valid invite, F3-3 empty moment refused, F4-2 deleting someone else's moment refused. Each test names its EARS row in the title. |
-| Judgment eval, `docs/JUDGMENT.md` | Rubric, two graders | At least ten binary questions covering the rows code cannot check: attribution visible on every moment, search terms preserved on an empty result, a private trip invisible to non-members. Two columns, disagreements marked. Agreement under 80 percent is a finding about the rubric. |
+| Judgment eval, `docs/JUDGEMENT.md` | Rubric, two graders | At least ten binary questions covering the rows code cannot check: attribution visible on every moment, search terms preserved on an empty result, a private trip invisible to non-members. Two columns, disagreements marked. Agreement under 80 percent is a finding about the rubric. |
 | Error-analysis log | Human | Every failure across the probe, the tests, and the judgment eval, counted and sorted. The most frequent failure is the next fix. |
 
 ## Prediction Stakes
@@ -87,7 +87,7 @@ Each member commits their own stake, in their own commit, before any Phase 2 cod
 
 ***Result (2026-10-21):** Correct. 3 of 7 moments in the test trip carried all three of photo, note, and place, below the half his prediction named. The sample is one trip with 4 accounts, so the margin is thin.*
 
-### Rishika Sikhakolli, Specifier — committed <2026-10-08>
+### Rishika Sikhakolli, Specifier — committed 2026-10-08
 
 **Prediction:** People might have things they want to add to the trip feeds that don't have all three criteria (photo, review, location name). F3-1 makes the note optional, members will mostly post a photo and a place, so searching by a word from the note (F5-1) will find fewer moments than searching by place, date, or member.
 
@@ -99,7 +99,7 @@ Each member commits their own stake, in their own commit, before any Phase 2 cod
 
 ***Result (2026-10-21):** Wrong. 7 of 7 moments in the test trip included a note, the opposite of the prediction: people skipped the photo or place, not the note. Searching by a word from the note (F5-1) would have found every moment.*
 
-### Aashi Mehta, Implementer — committed <date>
+### Aashi Mehta, Implementer — committed 2026-10-08
 
 **Tight:** F4 will not be tested properly because we will only have a few dummy accounts created to test the features. In order to test the feature, we need to multiple accounts who are all part of various trips. 
 
@@ -128,3 +128,29 @@ Each member commits their own stake, in their own commit, before any Phase 2 cod
 ## Where the Stakes Disagree
 *Nothing was inputted during Phase 1 for where the stakes disagree. I (Rishika), Phase 2 Reviewer, went through and deliberated the prediction stakes at the beginning of Phase 2 to fill this out.*
 Semaj and Rishika agree most moments will be partial, but disagree on which field is dropped. A test trip full of photo-and-note moments would prove Semaj right and Rishika wrong. Giancarlo predicts full-size phone photos will fail on Workers and D1 alone which would mean photos are rarer for technical reasons and not choice. Aashi’s Tight stake predicts too few test accounts to exercise F4. In this case, the moments counted for Semaj’s and Rishika’s stakes will come from teammates testing features.
+
+## Final Status (Phase 3)
+
+Closed out 2026-10-27 by Giancarlo Martinez-Saldana, Final Reviewer and Evaluator. Every check this file planned, and every stake above, is accounted for here. Stake headers that read `<date>` and `<2026-10-08>` now carry the date of the commit that added each stake (`d616dac` and `a0f07ce`, both 2026-10-08); no prediction or result text was changed.
+
+| Check | Planned in | Ran? | Result | Recorded in |
+|---|---|---|---|---|
+| Code evals F1-2, F2-2, F3-3, F4-2 | Evals Planned, row 1 | Yes, 2026-10-21, against the deployed Worker | 4 of 4 pass; breaking F4-2 on purpose made its test fail | `evals/worker.test.js`, DDR-004 |
+| Judgment eval, at least ten binary questions, two graders | Evals Planned, row 2 | Yes, 2026-10-20 and 2026-10-21 | 10 of 10 Yes from both graders, 100% agreement. The planned "search terms preserved" question was not run because F5 was not built, and no question covered F3-2. | `docs/JUDGEMENT.md` |
+| Error-analysis log | Evals Planned, row 3 | Only partly in Phase 2: JUDGEMENT.md logged "no failures" for the tests and judgment eval but did not cover the probe. Completed below in Phase 3. | 25 failures in 5 categories | Error-Analysis Log below |
+| RAT test, three interviews | RAT section | Yes, 2026-10-20 | Mixed: photos captured during the trip 3 of 3, notes written during the trip 1 of 3 | RAT Results above, `docs/VALIDATION.md` |
+| Prediction Stakes | Prediction Stakes | All four resolved 2026-10-21 | 2 correct (Semaj, Giancarlo), 1 wrong (Rishika), 1 mixed (Aashi: Tight wrong, Loose correct, Open untestable) | Each stake above |
+
+## Error-Analysis Log
+
+The plan asked for every failure across the probe, the tests, and the judgment eval, counted and sorted. The tests and judgment eval found none on the deployed build, so this log also counts the failures found before deployment, by the builder runs and in review, because that is where the project's failures actually were.
+
+| Rank | Failure category | Count | Instances (where recorded) |
+|---|---|---:|---|
+| 1 | The spec was silent and a builder had to guess | 11 | 5 spec gaps from the bolt.new probe (`docs/PROBE-001.md`); 3 F2 gaps from HW6 (PR #68, issue #59); 3 F3 gaps from HW6 (PR #89, issues #76 and #92) |
+| 2 | A document and the code or another document disagreed | 6 | ARCHITECTURE.md schema differed from `db/schema.sql` (no `sessions` table, no case-insensitive usernames, PR #61, fixed in #71); TOOLS.md lost its Cloudflare rows (PR #22, restored in #65); EVALS.md and DDR-004 named `JUDGMENT.md` while the file was `JUDGEMENT.md` (PR #84); README linked a file that did not exist and had broken italics (PR #86); the Phase 2 F2 changes in PR #68 merged into a side branch, not `main`, so FEATURES.md never received them; this file's Judgment eval row named the wrong file until Phase 3 |
+| 3 | AI-drafted work was committed without a DDR | 3 | Three PRs said "AI use: None" for work Claude helped draft (`35ce13d`, `489036d`, `6e2908f`), found and covered by DDR-004 |
+| 4 | A test or check could not detect what it claimed to | 3 | The first code-eval draft guessed the routes and sign-in wrong (DDR-004); `?failSave` only simulates F3-2 in the browser, and a DevTools Offline test did not block the request (DDR-003); no judgment question covered F3-2 |
+| 5 | A UI defect reached a draft | 2 | CSS overrode the `hidden` attribute, showing a broken photo preview (DDR-003); input borders measured 1.42:1, below the 3:1 STYLE.md requires (PR #81) |
+
+**The most frequent failure is the next fix.** Silent specs caused 11 of 25 failures, and every one was found by giving the spec to a builder, not by the team reading it. The next fix is to run a builder probe on every Must-be feature before building it, which Phase 2 did only for F2 and F3. The second-most frequent, documents drifting from code, was caught every time by a human review rather than a check; a code eval that compares `db/schema.sql` to the schema in ARCHITECTURE.md would have caught the largest one automatically.
