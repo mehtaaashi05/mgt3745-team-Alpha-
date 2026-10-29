@@ -27,13 +27,15 @@ Working agreement, RACI matrix, and rotation plan: [TEAM.md](TEAM.md).
 
 **Run the code evals** against the live app: `API=https://alpha-trips.mgt3745-hw4-giancarlo.workers.dev npm test` (or point `API` at http://localhost:8787 while `npm run dev` is running).
 
+**Presentation:** [Phase 3 presentation slides (Canva)](https://canva.link/vo4vzatgvtw97pn)
+
 ## Status
 
 Phase 1 decided four things: which problem to build (DACI-001), what to build (FEATURES.md), where it runs (ADR-001), and what would prove it works (EVALS.md). Phase 2 builds F1 (Accounts), F2 (Creating a trip and inviting members), F3 (Add a moment to a trip), and F4 (Trip view with who added what) first, because the riskiest assumption lives in these.
 
 ### Phase 2 Build Status
 
-Deployed 2026-10-20 on Cloudflare Workers and D1, as ADR-001 decided, from Giancarlo's Cloudflare account (TOOLS.md).
+Deployed on Cloudflare Workers and D1, as ADR-001 decided. First deployed 2026-10-20 from Giancarlo's Cloudflare account; redeployed in Phase 3 from Rishika Sikhakolli's account, the Final Implementer's ([DEPLOY.md](docs/DEPLOY.md), [DDR-008](docs/DDR-008.md)).
 
 | Feature | EARS rows | Manual check ([DDR-003](docs/DDR-003.md)) | Code eval ([evals/worker.test.js](evals/worker.test.js)) |
 |---|---|---|---|
@@ -46,6 +48,9 @@ All four code evals passed against the deployed Worker on 2026-10-21 (EVALS.md l
 
 Performance and Attractive features (F5 to F8) are not built yet.
 
+### Phase 3 Status
+
+Phase 3 integrated the build, redeployed it from the Final Implementer's account, and closed the learn loop in [RETRO.md](docs/RETRO.md). What is incomplete: features F5 to F8 are not built; no real group has used the deployed build, so the riskiest assumption is confirmed for photos, refuted for notes, and untested for the product itself; and the planned evals all passed without changing anything we did, which RETRO.md treats as a finding about the evals.
 
 ## Links, in Reading Order
 
@@ -66,6 +71,12 @@ Performance and Attractive features (F5 to F8) are not built yet.
 15. Code: [src/worker.js](src/worker.js) (API), [public/](public/) (pages), [db/schema.sql](db/schema.sql) and [db/seed.sql](db/seed.sql) (D1), [wrangler.toml](wrangler.toml) (deployment)
 16. Verification: [evals/worker.test.js](evals/worker.test.js) (code evals) and [docs/JUDGEMENT.md](docs/JUDGEMENT.md) (judgment eval, 10 of 10 passed with two graders)
 17. Team style and skills, merged from all four members' HW5 versions: [STYLE.md](context/STYLE.md), [SKILLS.md](context/SKILLS.md)
+18. [docs/DDR-006.md](docs/DDR-006.md), [docs/DDR-007.md](docs/DDR-007.md), [docs/DDR-008.md](docs/DDR-008.md), [docs/DDR-009.md](docs/DDR-009.md): the Phase 3 delegations
+19. [docs/DDR-LOG.md](docs/DDR-LOG.md): every delegation with its hours
+20. [docs/DEPLOY.md](docs/DEPLOY.md): deploying the Worker and D1 from a clean checkout
+21. [docs/RETRO.md](docs/RETRO.md): the learn-loop retrospective
+22. Individual retrospectives: [Semaj](docs/retro/semaj.md), [Rishika](docs/retro/rishika.md), [Giancarlo](docs/retro/giancarlo.md), [Aashi](docs/retro/aashi.md)
+23. [CONTRIBUTIONS.md](CONTRIBUTIONS.md): what each member shipped, delegated, and reviewed
 
 ## AI Use
 
