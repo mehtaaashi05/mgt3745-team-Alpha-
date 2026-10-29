@@ -7,7 +7,7 @@ This file governs every AI assistant used on this repository, whatever the tool.
 | Tool | Allowed role in our RACI | Notes |
 |---|---|---|
 | GitHub Copilot (in Codespaces) | R for drafts; C for review suggestions | Recorded in TOOLS.md |
-| Claude (chat and Cowork) | C in Phase 1. Phase 2: R for drafts of code and docs, C for critique | Every Claude-drafted piece gets a DDR naming the accountable member and the verification performed; synthetic data only |
+| Claude (chat and Cowork) | C in Phase 1. Phase 2: R for drafts of code and docs, C for critique. Phase 3: R for drafts of RETRO.md, DEPLOY.md, the README, and the recording script; C for critique | Every Claude-drafted piece gets a DDR naming the accountable member and the verification performed; synthetic data only |
 | bolt.new | R for specification probes and bounded builds with a DDR | Output never committed without a DDR and a human review |
 
 A tool not in this table is not used on this repository until a pull request adds it here and to TOOLS.md, approved by the Implementer.
