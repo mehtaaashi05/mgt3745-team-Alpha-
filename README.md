@@ -2,7 +2,7 @@
 
 ## What
 
-A shared trip record: everyone on a group trip adds photos, notes, and places as they happen, so the group can find what happened, where, and who added it long after the trip ends.
+A shared trip record for groups who travel together: everyone on the trip adds photos, notes, and places as they happen, so the group can find what happened, where, and who added it long after the trip ends, without searching for details or photos.
 
 ## Team
 
@@ -17,15 +17,15 @@ Working agreement, RACI matrix, and rotation plan: [TEAM.md](TEAM.md).
 
 ## See It Work
 
-**Live app:** https://alpha-trips.mgt3745-hw4-giancarlo.workers.dev
+**Live app:** https://alpha-trips.travlr.workers.dev
 
-**Try it with a demo account** (synthetic data only): sign in as `bea_s` with password `alpha-demo-pass`, then open [Lisbon spring break](https://alpha-trips.mgt3745-hw4-giancarlo.workers.dev/#/trip/1) to see moments from three members in the order they were added.
+**Try it with a demo account** (synthetic data only): sign in as `bea_s` with password `alpha-demo-pass`, then open [Lisbon spring break](https://alpha-trips.travlr.workers.dev/#/trip/1) to see moments from three members in the order they were added.
 
 ![The Lisbon spring break trip on the live app, signed in as the demo account bea_s: the trip's three members, and the Add a moment form refusing an empty moment with "Add a photo, a note, or a place." (F3-3)](docs/img/see-it-work.png)
 
 **Run it locally:** `npm install`, then `npm run db:local`, then `npm run dev`, and open http://localhost:8787.
 
-**Run the code evals** against the live app: `API=https://alpha-trips.mgt3745-hw4-giancarlo.workers.dev npm test` (or point `API` at http://localhost:8787 while `npm run dev` is running).
+**Run the code evals** against the live app: `API=https://alpha-trips.travlr.workers.dev npm test` (or point `API` at http://localhost:8787 while `npm run dev` is running).
 
 **Presentation:** [Phase 3 presentation slides (Canva)](https://canva.link/vo4vzatgvtw97pn)
 
@@ -80,6 +80,8 @@ Phase 3 integrated the build, redeployed it from the Final Implementer's account
 
 ## AI Use
 
-In Phase 1, AI tools were Responsible for one task (the bolt.new specification probe, DDR-001) and Consulted on 4 (drafting and critiquing of PROJECT.md, FEATURES.md, ARCHITECTURE.md, README.md, STANDARDS.md, TOOLS.md, and CLAUDE.md). No AI output was committed without a named reviewer. Nothing bolt.new generated is in this repository.
+In Phase 1, AI tools were Responsible for one task (the bolt.new specification probe, DDR-001) and Consulted on 7 (drafting and critiquing of PROJECT.md, FEATURES.md, ARCHITECTURE.md, README.md, STANDARDS.md, TOOLS.md, and CLAUDE.md). No AI output was committed without a named reviewer. Nothing bolt.new generated is in this repository.
 
 In Phase 2, Claude was Responsible for drafting the Worker, D1 schema, seed data, and pages ([DDR-003](docs/DDR-003.md)); Giancarlo is Accountable and verified every Must-be EARS row before committing. Claude also drafted the evals, eval results, and reviews ([DDR-004](docs/DDR-004.md), Rishika Accountable) and VALIDATION.md ([DDR-005](docs/DDR-005.md), Semaj Accountable). Copilot's drafting of STANDARDS.md is recorded in [DDR-002](docs/DDR-002.md).
+
+In Phase 3, Claude helped draft the ARCHITECTURE.md additions, DEPLOY.md, and Semaj's retrospective ([DDR-006](docs/DDR-006.md), Semaj Accountable); the context review, EVALS.md close-out, RETRO.md sections, and DDR-LOG.md ([DDR-007](docs/DDR-007.md), Giancarlo Accountable); and the redeploy, README edits, Phase 3 RACI rows, Rishika's retrospective, and the recording script ([DDR-008](docs/DDR-008.md), Rishika Accountable). Every delegation, with net hours, is in [DDR-LOG.md](docs/DDR-LOG.md).
