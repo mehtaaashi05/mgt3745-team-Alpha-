@@ -78,9 +78,9 @@ Revisit by 2026-10-29 if photo uploads fail the test in Giancarlo's Prediction S
 
 Both conditions came due and neither forces a rewrite, but one of them forces a decision that had never been written down.
 
-**Photo uploads.** Giancarlo's Prediction Stake resolved **Correct** on 2026-10-21: three of three full-size phone photos saved and displayed on Workers and D1 with no added storage service — but only because the build shrinks every photo in the browser first. The prediction's own terms ("if all three save and display through Workers and D1 alone, with no added service **or resizing step**, this prediction is wrong") make the resizing step the thing that saved it. ADR-001 named Workers and D1 and left resizing as an unmade choice. The build made it. ADR-002 records it.
+**Photo uploads.** Giancarlo's Prediction Stake resolved **Correct** on 2026-10-21: three of three phone photos saved and displayed on Workers and D1 with no added storage service, but only because the build shrinks every photo in the browser first. What was measured is therefore the shrunk path. No photo was ever sent to D1 at full size, so where full-size photos break is still untested, and the prediction's own failure condition was never exercised directly. The prediction's own terms ("if all three save and display through Workers and D1 alone, with no added service **or resizing step**, this prediction is wrong") make the resizing step the thing that saved it. ADR-001 named Workers and D1 and left resizing as an unmade choice. The build made it. ADR-002 records it.
 
-**The RAT.** The RAT resolved **Mixed** on 2026-10-20, not failed: 3 of 3 people took photos during the trip, 2 of 3 posted during, but only 1 of 3 wrote notes during. Photos are captured in the moment; text mostly is not. That does not threaten ADR-001 — a single Worker and one write endpoint is still the right shape for fast capture. It does change what the schema will be asked to do next, which is recorded under "What the Measurements Changed" below.
+**The RAT.** The RAT resolved **Mixed** on 2026-10-20, not failed: 3 of 3 people took photos during the trip, 2 of 3 posted during, but only 1 of 3 wrote notes during. Photos are captured in the moment; text mostly is not. That does not threaten ADR-001. A single Worker and one write endpoint is still the right shape for fast capture. It does change what the schema will be asked to do next, which is recorded under "What the Measurements Changed" below.
 
 ## ADR-002: Shrink Photos in the Browser Instead of Adding a File Store
 
@@ -120,11 +120,11 @@ Option 3 was rejected on the RAT: photos are the one thing people reliably captu
 - **Photos are permanently degraded on upload and the original is never stored.** The app is not a backup of anyone's camera roll, and nothing in the product says so. A member who wants the full-resolution photo keeps it themselves.
 - 1280 pixels looks right on a phone and visibly soft on a laptop at full width. **Nobody measured whether members mind.** The validation sessions did not ask, so this is an untested consequence of a tested decision.
 - **Two ceilings in two files have to be kept in step.** If a later change raises the browser's 650,000 above the Worker's 700,000, members will start meeting 413s the browser promised would not happen. Both constants are named above so the pair is findable from this document.
-- **Video or audio moments would not fit this design at all.** Nothing in FEATURES.md proposes them, so this is a boundary rather than a blocked feature. If a feature ever does, it needs the file store this ADR declined and would supersede this ADR rather than refine it.
+- **F7 (video moments) does not fit this design at all.** Video would need the file store this ADR declined, and would supersede it rather than refine it.
 
 ### Revisit Trigger
 
-Revisit if any one of: a feature proposing video or audio moments is scheduled; a member reports 1280 pixels as too soft; or notes and places grow large enough that a 700,000-character photo plus text approaches D1's 2,000,000-byte row limit.
+Revisit if any one of: F7 is scheduled; a member reports 1280 pixels as too soft; or notes and places grow large enough that a 700,000-character photo plus text approaches D1's 2,000,000-byte row limit.
 
 ## ADR History
 
@@ -267,7 +267,7 @@ flowchart LR
     Api -->|"DB binding: prepare().bind()"| D1
 ```
 
-The boxes match the deployed system one for one: a single Worker serves both the static pages and the API, and talks to a single D1 database. **There is no file-storage service, no model proxy, and no AI Gateway** — `src/worker.js` makes no outbound request, and its only bindings are `env.DB` and `env.ASSETS`. If any of those is added, this diagram changes in the same pull request as the ADR that adds it.
+The boxes match the deployed system one for one: a single Worker serves both the static pages and the API, and talks to a single D1 database. **There is no file-storage service, no model proxy, and no AI Gateway**. `src/worker.js` makes no outbound request, and its only bindings are `env.DB` and `env.ASSETS`. If any of those is added, this diagram changes in the same pull request as the ADR that adds it.
 
 The photo shrink is drawn inside the browser rather than left implicit because ADR-002 makes it load-bearing: it is the only reason photos fit in D1 at all, and the only step in the system that destroys data the member cannot get back.
 
@@ -277,28 +277,42 @@ The Phase 3 question for this document is not whether the architecture is defens
 
 | Measurement | Result | What it changed here |
 |---|---|---|
-| Giancarlo's Prediction Stake: full-size phone photos will not work in D1 | **Correct** (2026-10-21) — three of three saved, but only because the build shrinks them first | **ADR-002.** The one real architectural change in Phase 2. No new service, but the resizing step went from an unmade choice in ADR-001's consequences to a named decision with both ceilings recorded. |
-| RAT: people add moments *during* a trip, not after | **Mixed** (2026-10-20) — 3 of 3 took photos during, 1 of 3 wrote notes during | Nothing in the stack, which is the right outcome: one Worker and one write endpoint is still the shape fast capture wants. It moves what F5 will need. See below. |
-| Semaj's stake: fewer than half of moments will carry all three fields | **Correct** — 3 of 7 carried photo, note, and place | Confirmed the `moments` CHECK constraint, which accepts any one field, and confirmed F4-1 has to read well against mostly-partial rows. No change. |
-| Rishika's stake: notes will be the field people skip | **Wrong** — 7 of 7 moments carried a note | No change, and the reason is the finding. `docs/VALIDATION.md` says the test trip was teammates filling in a form rather than members on a trip, so the schema was never exercised against the behavior the RAT actually found. |
-| Four code evals: F1-2, F2-2, F3-3, F4-2 | **All pass** against the deployed Worker (2026-10-21) | Confirmed the authorization split this document describes — the database enforces uniqueness and non-blank moments, the Worker enforces membership and authorship. No change. |
+| Giancarlo's Prediction Stake: full-size phone photos will not work in D1 | **Correct** (2026-10-21): three of three saved, but only on the shrunk path. Full size was never sent to D1, so the failure point itself is untested. | **ADR-002.** The one real architectural change in Phase 2. No new service, but the resizing step went from an unmade choice in ADR-001's consequences to a named decision with both ceilings recorded. |
+| RAT: people add moments *during* a trip, not after | **Mixed** (2026-10-20): 3 of 3 took photos during, 1 of 3 wrote notes during | Nothing in the stack, which is the right outcome: one Worker and one write endpoint is still the shape fast capture wants. It moves what F5 will need. See below. |
+| Semaj's stake: fewer than half of moments will carry all three fields | **Correct**: 3 of 7 carried photo, note, and place | Confirmed the `moments` CHECK constraint, which accepts any one field, and confirmed F4-1 has to read well against mostly-partial rows. No change. |
+| Rishika's stake: notes will be the field people skip | **Wrong**: 7 of 7 moments carried a note | No change, and the reason is the finding. `docs/VALIDATION.md` says the test trip was teammates filling in a form rather than members on a trip, so the schema was never exercised against the behavior the RAT actually found. |
+| Four code evals: F1-2, F2-2, F3-3, F4-2 | **All pass** against the deployed Worker (2026-10-21) | Confirmed the authorization split this document describes. The database enforces uniqueness and non-blank moments, the Worker enforces membership and authorship. No change. |
 | Judgment eval, 10 of 10 with two graders | **Pass** | No change. It checked what members see, not where anything runs, so architecture was never in its scope. |
 
 ### A measurement the schema made impossible
 
-The RAT named two signals: the interviews, and "moments whose timestamps cluster after a trip's end date rather than during it." That second signal could not be read at all. `trips` stores a name, a creator, an invite hash, and `created_at` — it has no trip start or end date, so the deployed database cannot say whether a moment landed during a trip or three weeks later. The RAT had to be settled on interviews alone.
+The RAT named two signals: the interviews, and "moments whose timestamps cluster after a trip's end date rather than during it." That second signal could not be read at all. `trips` stores a name, a creator, an invite hash, and `created_at`. It has no trip start or end date, so the deployed database cannot say whether a moment landed during a trip or three weeks later. The RAT had to be settled on interviews alone.
 
-This is a schema decision quietly constraining a measurement, and it is worth naming because nobody chose it on purpose. The RAT was written in Phase 1 and the schema in Phase 2, so whoever designed trips already had the RAT’s build signal in front of them, and the two date columns still did not get added. Neither artifact is wrong on its own — the gap opened in the handoff between them, which is a cost of rotating roles that no single phase’s review would have caught. The schema’s consequences section flagged the gap honestly; this is what the gap cost.
+This is a schema decision quietly constraining a measurement, and it is worth naming because nobody chose it on purpose. If the team had wanted the build to help answer its own riskiest assumption, `trips` needed two date columns in Phase 1. The schema's consequences section flagged the gap; this is what the gap cost.
 
 ### What the RAT points at, and the schema cannot do yet
 
-The RAT found that people look for an old moment by a word they remember, by asking someone, or not at all — and that notes are mostly written after the trip rather than during it. F5 (Find it later) is where that lands, and the schema is not ready for it. The only index on `moments` is `moments_by_trip (trip_id, created_at, id)`, which serves F4-1's added-order listing and a date range. It does nothing for a search by place, by member, or by a word in a note.
+The RAT found that people look for an old moment by a word they remember, by asking someone, or not at all, and that notes are mostly written after the trip rather than during it. F5 (Find it later) is where that lands, and the schema is not ready for it. The only index on `moments` is `moments_by_trip (trip_id, created_at, id)`, which serves F4-1's added-order listing and a date range. It does nothing for a search by place, by member, or by a word in a note.
 
 Building F5 on that finding needs either an index on `place` and `author_id` or D1's full-text search, and that would be **ADR-003**. F5 is not built, so no ADR-003 has been written. Naming the gap is the deliverable here; filling it is not Phase 3 work.
 
+## Resolved in Phase 3
+
+**The deployment account handoff is complete.** Phase 3 asks for the deployed build to come from the Final-phase Implementer's account. Rishika Sikhakolli deployed from hers on 2026-10-26, and the repository changes merged on 2026-10-29 in #108. Verified against `main` on 2026-10-29:
+
+| What moved | State on `main` |
+|---|---|
+| `wrangler.toml` | Carries the `database_id` for the D1 database on Rishika's account, replacing the Phase 2 one |
+| `context/TOOLS.md` | Names her accountable for Cloudflare and for wrangler from 2026-10-26, with the previous owners kept in the row |
+| `evals/worker.test.js` | Header runs the evals against `alpha-trips.travlr.workers.dev` |
+| `README.md` | Live app, demo trip, and code-eval command all point at that URL; build status records both deployments and their dates |
+| `package.json` | Gained `"type": "module"` in the same pull request |
+
+Nothing about the handoff is outstanding. Two consequences follow for other files rather than for this one. The `"type": "module"` addition removes the Node 22.7 floor that `docs/DEPLOY.md` first recorded, and the `database_id` quoted in that file's step 3 is now the previous account's; both are corrected there. The procedure in DEPLOY.md was written before the move and was followed during it, which is the only test it has had.
+
 ## What Is Still Open
 
-1. **The deployment account.** The deployment moved on 2026-10-26, and three files have not caught up. The build now runs from the Final-phase Implementer’s Cloudflare account as Phase 3 asks — alpha-trips.travlr.workers.dev, Rishika’s, replacing Giancarlo’s — and README.md (#100) points there. But wrangler.toml still carries the Phase 2 database_id, context/TOOLS.md still names Giancarlo’s account and laptop in the Cloudflare and wrangler rows with no dated handoff row, and the header comment in evals/worker.test.js still shows the old URL in its API= example. The database_id is the one that breaks something: a clean checkout deploys against the wrong database. docs/DEPLOY.md has the procedure and the checklist for this exact move.
+1. **Two of this document's companions are not merged yet, and a stranger meets them first.** `docs/DEPLOY.md` is open in #105 and currently sits at the repository root, while README.md on `main` already links `docs/DEPLOY.md`, so that link is broken until #105 lands at the right path. TEAM.md on `main` pairs the Phase 3 roster with the Phase 2 RACI matrix, because #96 is open. Neither is an architecture problem; both are visible in the submitted repository, which makes them this section's business.
 2. **F5 through F8 are not built**, so this architecture has only ever been exercised by the four Must-be features.
 3. **1280 pixels is untested with members.** ADR-002 degrades every photo and no session asked anyone whether they noticed.
 4. **The behavior the architecture was tested against is not the behavior the RAT found.** Four teammate accounts in one trip, in one sitting, is the sample behind every stake resolution above.
