@@ -128,7 +128,7 @@ One risk the plan did not foresee: **the same tool drafted the build (DDR-003) a
 
 ### Net Hours Delegated
 
-Summed from [DDR-LOG.md](DDR-LOG.md): about **30.0 hours** of work estimated by hand, done in about **10.0 hours** with delegation, a net saving of about **20.0 hours** across seven DDRs. DDR-003 (the build) alone accounts for 7.0 of those hours. The delegations without a DDR are not counted, so the true figure is higher, and every number is the DDR author's own estimate, not a measurement.
+Summed from [DDR-LOG.md](DDR-LOG.md): about **35.0 hours** of work estimated by hand, done in about **12.0 hours** with delegation, a net saving of about **23.0 hours** across eight DDRs. DDR-003 (the build) alone accounts for 7.0 of those hours. The delegations without a DDR are not counted, so the true figure is higher, and every number is the DDR author's own estimate, not a measurement.
 
 ## 5. What We Would Build Differently
 
@@ -175,5 +175,5 @@ The Phase 3 assignment says an assistant that helped build a feature is never it
 | Test trip: 7 of 7 moments had a note; 3 of 7 had all three fields | EVALS.md, Rishika's and Semaj's results  | Yes |
 | PR #68 merged into `review/f2-spec-gaps`, not `main` | PR #68 base branch; FEATURES.md on `main` has no F2 change from it  | Yes |
 | Error-analysis log totals 25 failures, 11 from silent specs | EVALS.md, Error-Analysis Log  | Yes |
-| Net hours: 30.0 by hand, 10.0 actual, 20.0 saved | DDR-LOG.md, each DDR's Economic Rationale  | Yes |
+| Net hours: 35.0 by hand, 12.0 actual, 23.0 saved (eight DDRs, including DDR-008) | DDR-LOG.md, each DDR's Economic Rationale  | Yes |
 | No AI approved or merged a PR | PR merge and review history  | Yes |
