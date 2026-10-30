@@ -1,6 +1,8 @@
 # ARCHITECTURE.md
 
-Accountable: Aashi Mehta, Phase 2 Architect. Weights were committed in their own commit before any option was scored; the commit history is the evidence.
+Accountable: Semaj Johnson II, Phase 3 Architect (previously Aashi Mehta, Phase 2; Giancarlo, Phase 1). Weights were committed in their own commit before any option was scored; the commit history is the evidence.
+
+This is the final state of the architecture. The Gate and ADR-001 below are Phase 1 records and are not edited. ADR-002, the ADR history, and the sections after the diagram are the Phase 3 additions: what the build actually did, what the measurements said about it, and what is still open.
 
 ## The Gate: Build, Buy, or Delegate
 
@@ -71,6 +73,67 @@ Build option 1. Structure lives in `index.html`, presentation in `styles.css`, a
 ### Revisit Trigger
 
 Revisit by 2026-10-29 if photo uploads fail the test in Giancarlo's Prediction Stake, or if the RAT fails in user interviews by 2026-10-22.
+
+### Revisit Trigger: Resolved 2026-10-27
+
+Both conditions came due and neither forces a rewrite, but one of them forces a decision that had never been written down.
+
+**Photo uploads.** Giancarlo's Prediction Stake resolved **Correct** on 2026-10-21: three of three phone photos saved and displayed on Workers and D1 with no added storage service, but only because the build shrinks every photo in the browser first. What was measured is therefore the shrunk path. No photo was ever sent to D1 at full size, so where full-size photos break is still untested, and the prediction's own failure condition was never exercised directly. The prediction's own terms ("if all three save and display through Workers and D1 alone, with no added service **or resizing step**, this prediction is wrong") make the resizing step the thing that saved it. ADR-001 named Workers and D1 and left resizing as an unmade choice. The build made it. ADR-002 records it.
+
+**The RAT.** The RAT resolved **Mixed** on 2026-10-20, not failed: 3 of 3 people took photos during the trip, 2 of 3 posted during, but only 1 of 3 wrote notes during. Photos are captured in the moment; text mostly is not. That does not threaten ADR-001. A single Worker and one write endpoint is still the right shape for fast capture. It does change what the schema will be asked to do next, which is recorded under "What the Measurements Changed" below.
+
+## ADR-002: Shrink Photos in the Browser Instead of Adding a File Store
+
+### Status
+
+Accepted, 2026-10-27. **Refines ADR-001; does not supersede it.** ADR-001 remains Accepted and the stack it names is unchanged. Driver: Semaj Johnson II (Phase 3 Architect). Approver: Rishika Sikhakolli (Phase 3 Implementer), who owns the integrated build and inherits the consequence. Consulted: Giancarlo Martinez-Saldana (Phase 2 Implementer), who built the mechanism this ADR records.
+
+### Context
+
+ADR-001 chose Workers and D1 and added nothing else. Under Consequences it flagged the gap honestly and left it open: "D1 is built for rows of text, not large photos. Full-size phone photos may need resizing in the browser or a separate file store, which would require revising this ADR." It tied the outcome to Giancarlo's Prediction Stake rather than guessing.
+
+The stake resolved Correct. The Phase 2 build shrinks photos in the browser, and `docs/DDR-003.md` handed the decision forward in writing: "Photos are resized in the browser and stored in D1 as data URLs, capped by the Worker. This follows ADR-001's consequences; if real phone photos fail, that is an ADR-002 decision for the Architect."
+
+So the mechanism is deployed, it has been measured, and until now no decision record named it. A mechanism in the code that no ADR owns is the thing ADRs exist to prevent.
+
+### Options
+
+1. **Shrink in the browser and store the result in D1.** What the build does. No new service.
+2. **Add a file store (Cloudflare R2) and keep photos at full size.** Keeps originals; adds a vendor, a binding, a TOOLS.md row, and a second crossing.
+3. **Refuse photos over D1's limit and ask the member to shrink them.** No new service and no quality loss, but it puts work on the member at exactly the moment F3 exists to make fast.
+
+### Decision
+
+Option 1, with two ceilings, the client's deliberately stricter than the server's.
+
+**In the browser** (`public/app.js`): `MAX_PHOTO_EDGE = 1280` pixels on the longest edge and `MAX_PHOTO_CHARS = 650000`. `shrinkPhoto()` re-encodes to JPEG at quality 0.75; if the data URL is still over the ceiling it retries up to six times, each pass scaling the longest edge to 75 percent and dropping quality by 0.05 to a floor of 0.5. If all six fail it throws, and the member sees "That photo could not be used. Try a JPEG or PNG."
+
+**In the Worker** (`src/worker.js`): `MAX_PHOTO_CHARS = 700000`, plus a data-URL prefix check that accepts only `image/jpeg`, `image/png`, or `image/webp` base64. Over the ceiling returns 413, "That photo is too large even after resizing."
+
+The 50,000-character gap between 650,000 and 700,000 is the point, not an inconsistency. A photo that clears the browser can never trip the Worker's 413, so the server ceiling is a backstop against a client that has been bypassed rather than a limit members actually meet. Cloudflare documents D1's maximum single value at 2,000,000 bytes, so 700,000 characters of base64 leaves room for the note, the place, and the rest of the row.
+
+Option 3 was rejected on the RAT: photos are the one thing people reliably capture in the moment, so the photo path is the worst place in the app to add a manual step. Option 2 was rejected because option 1 works at the sizes measured, and a second vendor is a crossing to account for and a switching cost to carry for a problem we do not have yet.
+
+### Consequences
+
+- No storage service is added, so the diagram, `wrangler.toml`, and TOOLS.md are unchanged, and leaving Cloudflare is still one `wrangler d1 export` and one Worker rewrite.
+- **Photos are permanently degraded on upload and the original is never stored.** The app is not a backup of anyone's camera roll, and nothing in the product says so. A member who wants the full-resolution photo keeps it themselves.
+- 1280 pixels looks right on a phone and visibly soft on a laptop at full width. **Nobody measured whether members mind.** The validation sessions did not ask, so this is an untested consequence of a tested decision.
+- **Two ceilings in two files have to be kept in step.** If a later change raises the browser's 650,000 above the Worker's 700,000, members will start meeting 413s the browser promised would not happen. Both constants are named above so the pair is findable from this document.
+- **F7 (video moments) does not fit this design at all.** Video would need the file store this ADR declined, and would supersede it rather than refine it.
+
+### Revisit Trigger
+
+Revisit if any one of: F7 is scheduled; a member reports 1280 pixels as too soft; or notes and places grow large enough that a 700,000-character photo plus text approaches D1's 2,000,000-byte row limit.
+
+## ADR History
+
+| ADR | Decision | Status | Driver | What changed it |
+|---|---|---|---|---|
+| ADR-001 | Build the travel app on Cloudflare Workers and D1 | **Accepted** 2026-10-08. Still in force; not superseded. | Giancarlo (Phase 1 Architect) | The Gate: Build scored 93 of 105 against Buy 40 and Delegate 56. |
+| ADR-002 | Shrink photos in the browser instead of adding a file store | **Accepted** 2026-10-27. Refines ADR-001. | Semaj Johnson II (Phase 3 Architect) | Giancarlo's Prediction Stake resolved Correct on 2026-10-21, but only because of a resizing step ADR-001 had left as an open choice. DDR-003 named it as the Architect's decision. |
+
+Nothing has been superseded. The stack in ADR-001 is the stack that is deployed, and the coherence check below is the evidence.
 
 ## D1 Schema
 
@@ -175,38 +238,99 @@ Enforced by the Worker, because the database cannot know who is asking:
 
 `moments.photo_data_url` holds the photo as a data URL inside D1, as ADR-001 decided. `wrangler.toml` binds only `DB` (D1) and `ASSETS` (static pages); there is no file-storage service.
 
-Cloudflare documents the maximum size of a single string, BLOB, or table row in D1 as 2,000,000 bytes (https://developers.cloudflare.com/d1/platform/limits/). A data URL is base64, about one third larger than the image, so a photo must be roughly 1.5 MB or less before encoding to fit its row together with a note and place. Full-size phone photos are usually larger, so the design requires the photo to be reduced in the browser before upload. Whether that holds for the deployed build is the claim tested by Giancarlo's Prediction Stake in EVALS.md.
+Cloudflare documents the maximum size of a single string, BLOB, or table row in D1 as 2,000,000 bytes (https://developers.cloudflare.com/d1/platform/limits/). A data URL is base64, about one third larger than the image, so a photo must be roughly 1.5 MB or less before encoding to fit its row together with a note and place. Full-size phone photos are usually larger, so the design requires the photo to be reduced in the browser before upload.
 
-Moving photos to a separate file-storage service would depart from ADR-001 and requires a superseding ADR (ADR-002), with ADR-001 marked Superseded, before it is built. No such departure has been made.
+Giancarlo's Prediction Stake tested exactly that and resolved Correct on 2026-10-21. **ADR-002 now records the reduction as a decision**, with both ceilings and their values. Read ADR-002 before changing either constant.
+
+Moving photos to a separate file-storage service would still depart from ADR-001 and would supersede ADR-002 rather than refine it. No such departure has been made.
 
 ## Architecture Diagram
 
 ```mermaid
 flowchart LR
-    Browser["Trip member's browser<br/>(phone or laptop)"]
-
-    subgraph Worker["Cloudflare Worker: alpha-trips"]
-        Assets["Static assets (ASSETS binding)<br/>index.html, styles.css, app.js"]
-        Api["API and authorization<br/>src/worker.js"]
+    subgraph Client["Trip member's browser (phone or laptop)"]
+        Page["index.html, styles.css, app.js"]
+        Shrink["shrinkPhoto()<br/>1280 px edge, 650,000 char cap<br/>(ADR-002)"]
     end
 
-    D1[("Cloudflare D1: alpha-db<br/>accounts, sessions, trips, members, moments")]
+    subgraph Worker["Cloudflare Worker: alpha-trips"]
+        Assets["Static assets<br/>ASSETS binding"]
+        Api["API and authorization<br/>src/worker.js<br/>700,000 char backstop → 413"]
+    end
 
-    Browser -->|"HTTPS: page load"| Assets
-    Browser -->|"HTTPS: API calls with session cookie"| Api
+    D1[("Cloudflare D1: alpha-db<br/>accounts, sessions, trips<br/>members, moments")]
+
+    Page -->|"HTTPS: page load"| Assets
+    Page --> Shrink
+    Shrink -->|"HTTPS: POST moment, session cookie"| Api
+    Page -->|"HTTPS: API calls, session cookie"| Api
     Api -->|"DB binding: prepare().bind()"| D1
 ```
 
-The boxes match the deployed system one for one: a single Worker serves both the static pages and the API, and talks to a single D1 database. There is no file-storage service and no model proxy. If either is added, this diagram changes in the same pull request as the ADR that adds it.
+The boxes match the deployed system one for one: a single Worker serves both the static pages and the API, and talks to a single D1 database. **There is no file-storage service, no model proxy, and no AI Gateway**. `src/worker.js` makes no outbound request, and its only bindings are `env.DB` and `env.ASSETS`. If any of those is added, this diagram changes in the same pull request as the ADR that adds it.
 
-## Coherence Check: ADR-001 Against the Build
+The photo shrink is drawn inside the browser rather than left implicit because ADR-002 makes it load-bearing: it is the only reason photos fit in D1 at all, and the only step in the system that destroys data the member cannot get back.
 
-| ADR-001 claim | Evidence | Status |
+## What the Measurements Changed
+
+The Phase 3 question for this document is not whether the architecture is defensible but whether anything measured in Phase 2 moved it. One thing did. Most did not, and a check that changes nothing is still a finding about the check.
+
+| Measurement | Result | What it changed here |
 |---|---|---|
-| Runs on Cloudflare Workers and D1 | `wrangler.toml`: Worker `alpha-trips`, D1 binding `DB` to `alpha-db` | Matches |
-| Static pages: `index.html`, `styles.css`, `app.js` | `[assets]` binding to `./public`; `index.html` loads `styles.css` and `app.js` | Matches |
-| Photos stored in D1, no separate file storage | No other storage binding; `photo_data_url` column | Matches |
-| This document describes the deployed schema | SQL block is a copy of `db/schema.sql` | Matches |
-| This diagram describes the deployed system | One Worker, one D1 database | Matches |
+| Giancarlo's Prediction Stake: full-size phone photos will not work in D1 | **Correct** (2026-10-21): three of three saved, but only on the shrunk path. Full size was never sent to D1, so the failure point itself is untested. | **ADR-002.** The one real architectural change in Phase 2. No new service, but the resizing step went from an unmade choice in ADR-001's consequences to a named decision with both ceilings recorded. |
+| RAT: people add moments *during* a trip, not after | **Mixed** (2026-10-20): 3 of 3 took photos during, 1 of 3 wrote notes during | Nothing in the stack, which is the right outcome: one Worker and one write endpoint is still the shape fast capture wants. It moves what F5 will need. See below. |
+| Semaj's stake: fewer than half of moments will carry all three fields | **Correct**: 3 of 7 carried photo, note, and place | Confirmed the `moments` CHECK constraint, which accepts any one field, and confirmed F4-1 has to read well against mostly-partial rows. No change. |
+| Rishika's stake: notes will be the field people skip | **Wrong**: 7 of 7 moments carried a note | No change, and the reason is the finding. `docs/VALIDATION.md` says the test trip was teammates filling in a form rather than members on a trip, so the schema was never exercised against the behavior the RAT actually found. |
+| Four code evals: F1-2, F2-2, F3-3, F4-2 | **All pass** against the deployed Worker (2026-10-21) | Confirmed the authorization split this document describes. The database enforces uniqueness and non-blank moments, the Worker enforces membership and authorship. No change. |
+| Judgment eval, 10 of 10 with two graders | **Pass** | No change. It checked what members see, not where anything runs, so architecture was never in its scope. |
 
-Departures from ADR-001: none. No ADR-002 has been written.
+### A measurement the schema made impossible
+
+The RAT named two signals: the interviews, and "moments whose timestamps cluster after a trip's end date rather than during it." That second signal could not be read at all. `trips` stores a name, a creator, an invite hash, and `created_at`. It has no trip start or end date, so the deployed database cannot say whether a moment landed during a trip or three weeks later. The RAT had to be settled on interviews alone.
+
+This is a schema decision quietly constraining a measurement, and it is worth naming because nobody chose it on purpose. If the team had wanted the build to help answer its own riskiest assumption, `trips` needed two date columns in Phase 1. The schema's consequences section flagged the gap; this is what the gap cost.
+
+### What the RAT points at, and the schema cannot do yet
+
+The RAT found that people look for an old moment by a word they remember, by asking someone, or not at all, and that notes are mostly written after the trip rather than during it. F5 (Find it later) is where that lands, and the schema is not ready for it. The only index on `moments` is `moments_by_trip (trip_id, created_at, id)`, which serves F4-1's added-order listing and a date range. It does nothing for a search by place, by member, or by a word in a note.
+
+Building F5 on that finding needs either an index on `place` and `author_id` or D1's full-text search, and that would be **ADR-003**. F5 is not built, so no ADR-003 has been written. Naming the gap is the deliverable here; filling it is not Phase 3 work.
+
+## Resolved in Phase 3
+
+**The deployment account handoff is complete.** Phase 3 asks for the deployed build to come from the Final-phase Implementer's account. Rishika Sikhakolli deployed from hers on 2026-10-26, and the repository changes merged on 2026-10-29 in #108. Verified against `main` on 2026-10-29:
+
+| What moved | State on `main` |
+|---|---|
+| `wrangler.toml` | Carries the `database_id` for the D1 database on Rishika's account, replacing the Phase 2 one |
+| `context/TOOLS.md` | Names her accountable for Cloudflare and for wrangler from 2026-10-26, with the previous owners kept in the row |
+| `evals/worker.test.js` | Header runs the evals against `alpha-trips.travlr.workers.dev` |
+| `README.md` | Live app, demo trip, and code-eval command all point at that URL; build status records both deployments and their dates |
+| `package.json` | Gained `"type": "module"` in the same pull request |
+
+Nothing about the handoff is outstanding. Two consequences follow for other files rather than for this one. The `"type": "module"` addition removes the Node 22.7 floor that `docs/DEPLOY.md` first recorded, and the `database_id` quoted in that file's step 3 is now the previous account's; both are corrected there. The procedure in DEPLOY.md was written before the move and was followed during it, which is the only test it has had.
+
+## What Is Still Open
+
+1. **Two of this document's companions are not merged yet, and a stranger meets them first.** `docs/DEPLOY.md` is open in #105 and currently sits at the repository root, while README.md on `main` already links `docs/DEPLOY.md`, so that link is broken until #105 lands at the right path. TEAM.md on `main` pairs the Phase 3 roster with the Phase 2 RACI matrix, because #96 is open. Neither is an architecture problem; both are visible in the submitted repository, which makes them this section's business.
+2. **F5 through F8 are not built**, so this architecture has only ever been exercised by the four Must-be features.
+3. **1280 pixels is untested with members.** ADR-002 degrades every photo and no session asked anyone whether they noticed.
+4. **The behavior the architecture was tested against is not the behavior the RAT found.** Four teammate accounts in one trip, in one sitting, is the sample behind every stake resolution above.
+
+## Coherence Check: The ADRs Against the Deployed Build
+
+Re-verified 2026-10-27 against the files on `main`.
+
+| Claim | Evidence | Status |
+|---|---|---|
+| ADR-001: runs on Cloudflare Workers and D1 | `wrangler.toml`: Worker `alpha-trips`, D1 binding `DB` to `alpha-db` | Matches |
+| ADR-001: static pages `index.html`, `styles.css`, `app.js` | `[assets]` binding to `./public`; `index.html` loads `styles.css` and `app.js` | Matches |
+| ADR-001: photos in D1, no separate file storage | `wrangler.toml` binds only `DB` and `ASSETS`; `moments.photo_data_url` holds the data URL | Matches |
+| ADR-001: all application SQL through `prepare().bind()` | `src/worker.js`; the only `env.*` references in the Worker are `env.DB` and `env.ASSETS` | Matches |
+| ADR-001: no external service beyond Cloudflare | `src/worker.js` makes no outbound request; no model proxy, no AI Gateway | Matches |
+| ADR-002: browser ceilings 1280 px and 650,000 characters | `public/app.js`: `MAX_PHOTO_EDGE = 1280`, `MAX_PHOTO_CHARS = 650000`, `shrinkPhoto()` | Matches |
+| ADR-002: Worker ceiling 700,000 characters, stricter client | `src/worker.js`: `MAX_PHOTO_CHARS = 700000`, 413 above it, prefix check on the data URL | Matches |
+| This document describes the deployed schema | SQL block above is a copy of `db/schema.sql` | Matches |
+| This diagram describes the deployed system | One Worker serving pages and API, one D1 database, nothing else | Matches |
+
+**Departures: none.** ADR-001 is Accepted and not superseded; ADR-002 refines it. Every row above was checked against the file named beside it rather than against this document's own earlier claims.
